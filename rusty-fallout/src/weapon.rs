@@ -21,30 +21,23 @@ pub enum Range {
     Long,
     Extream,
 }
-//pub enum AmmoType {
-//    .38,
-//    .308,
-//    .45,
-//    .50,
-//    10mm,
-//}
 pub struct Properties {
-    Accurate: bool,
-    Blast: bool,
-    CloseQuarters: bool,
-    Concealed: bool,
-    Debilitating: bool,
-    Gattling: bool,
-    Inaccurate: bool,
-    Mine: bool,
-    Nightvision: bool,
-    Parry: bool,
-    Recon: bool,
-    Reliable: bool,
-    Suppressed: bool,
-    Thrown: bool,
-    TwoHanded: bool,
-    Unreliable: bool,
+    accurate: bool,
+    blast: bool,
+    close_quarters: bool,
+    concealed: bool,
+    debilitating: bool,
+    gattling: bool,
+    inaccurate: bool,
+    mine: bool,
+    nightvision: bool,
+    parry: bool,
+    recon: bool,
+    reliable: bool,
+    suppressed: bool,
+    thrown: bool,
+    twoHanded: bool,
+    unreliable: bool,
 }
 pub struct DamageEffects {
     burst: bool,
@@ -63,11 +56,67 @@ pub struct Weapon {
     weapon_type: WeaponType,
     damage_rating: i8,
     damage_type: DamageType,
+    damage_effects: DamageEffects,
     fire_rate: i8,
     properties: Properties,
     weight: f32,
 }
+
 pub fn weapon_table_setup() {
+    let AmmoType = vec![
+        ".308",
+        ".44",
+        ".45",
+        ".50",
+        "10mm",
+        "5mm",
+        "5,56",
+        "shotgun shell",
+        "Missile",
+        "2mm EC",
+        "Flamer Fuel",
+        "Fusion Cell",
+        "Gamma Round",
+        "Plasma Cartridge",
+        "Fusion Core",
+        "Mini Nuke",
+        "Flare",
+        "Syringer Ammo",
+    ];
+    let SmallGunList = vec![
+        ".44 Pistol",
+        "10mm Pistol",
+        "Flare gun",
+        "Assault Rifle",
+        "Combat Rifle",
+        "Gauss Rifle",
+        "Hunting Rifle",
+        "Submachine Gun",
+        "Semi-automatic Shotgun",
+        "Double Barreled Shotgun",
+        "Pipe bolt-action Gun",
+        "Pipe-Gun",
+        "Pipe-Revolver",
+        "Railway Rifle",
+        "Syringer",
+    ];
+    let EnergyWeaponList = vec![
+        "Institute Laser",
+        "Laser Musket",
+        "Laser Gun",
+        "Plasma Gun",
+        "Gamma Gun",
+    ];
+    let BigGuns = vec![
+        "Fat Man",
+        "Flamer",
+        "Gatling Laser",
+        "Heavy Incinerator",
+        "Junk Jet",
+        "Minigun",
+        "Missile Launcher",
+    ];
+
     let mut weapon_rarity = 10;
     println!("do you want a modified weapon? Y/N");
     let modded_weapon = crate::utility::convert_input_to_bool();
