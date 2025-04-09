@@ -83,23 +83,34 @@ pub fn weapon_table_setup() {
         "Flare",
         "Syringer Ammo",
     ];
-    let SmallGunList = vec![
-        ".44 Pistol",
-        "10mm Pistol",
-        "Flare gun",
-        "Assault Rifle",
-        "Combat Rifle",
-        "Gauss Rifle",
-        "Hunting Rifle",
-        "Submachine Gun",
-        "Semi-automatic Shotgun",
-        "Double Barreled Shotgun",
-        "Pipe bolt-action Gun",
-        "Pipe-Gun",
-        "Pipe-Revolver",
-        "Railway Rifle",
-        "Syringer",
-    ];
+//    let SmallGunList = vec![
+        let 44 = Weapon{
+            name: String::from(".44 Pistol"), 
+            rarity: i8:2, 
+            value: 99, 
+            weapon_type: WeaponType::SmallGun, 
+            damage_rating: 6, 
+            damage_type: DamageType::Physical, 
+            damage_effects: DamageEffects::vicious = true, 
+            fire_rate::1, 
+            properties: Properties::close_quarters = true, 
+            weight:4 
+        };
+//        "10mm Pistol",
+//        "Flare gun",
+//        "Assault Rifle",
+//        "Combat Rifle",
+//        "Gauss Rifle",
+//        "Hunting Rifle",
+//        "Submachine Gun",
+//        "Semi-automatic Shotgun",
+//        "Double Barreled Shotgun",
+//        "Pipe bolt-action Gun",
+//        "Pipe-Gun",
+//        "Pipe-Revolver",
+//        "Railway Rifle",
+//        "Syringer",
+//    ];
     let EnergyWeaponList = vec![
         "Institute Laser",
         "Laser Musket",
@@ -116,6 +127,31 @@ pub fn weapon_table_setup() {
         "Minigun",
         "Missile Launcher",
     ];
+
+    let MeleeWeapons = vec![
+        "Sword",
+        "Combat Knife",
+        "Machete",
+        "Ripper",
+        "Shishkebab",
+        "Switchblade",
+        "Baseball bat",
+        "Aluminium Bat",
+        "Board",
+        "Lead Pipe",
+        "Pipe Wrench",
+        "Pool Que",
+        "Rolling Pin",
+        "Baton",
+        "Sledgehammer",
+        "Super Sledge",
+        "Tire Iron",
+        "walking Cane",
+        "Boxing Glove",
+        "Deathclaw Gauntlet",
+        "Brass Knuckles",
+        "Power Fist"
+    ]
 
     let mut weapon_rarity = 10;
     println!("do you want a modified weapon? Y/N");
