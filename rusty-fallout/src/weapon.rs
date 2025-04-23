@@ -68,6 +68,35 @@ pub const AMMO_TYPE:[&str; 20] = [".308", ".44", ".45", ".50", "10mm", "5mm", "5
     
 
 pub fn weapon_table_setup() {
+
+    let default_properties = Properties{
+        accurate:false, 
+        blast:false, 
+        close_quarters:false, 
+        concealed:false, 
+        debilitating:false, 
+        gattling:false, 
+        inaccurate:false, 
+        mine:false, 
+        nightvision:false,
+        parry:false, 
+        recon:false, 
+        reliable:false, 
+        suppressed:false, 
+        thrown:false, 
+        two_handed:false, 
+        unreliable:false
+    };
+    let default_damage_effects = DamageEffects{
+        burst:false, 
+        breaking:false, 
+        persistant:false, 
+        peircing:0, 
+        radioactive:false, 
+        spread:false, 
+        stun:false, 
+        vicious:false
+    };
     let small_gun_list = [
         Weapon{
             name: String::from(".44 Pistol"), 
@@ -77,32 +106,12 @@ pub fn weapon_table_setup() {
             damage_rating: 6, 
             damage_type: DamageType::Physical, 
             damage_effects: DamageEffects{
-                burst: false, 
-                breaking: false, 
-                persistant: false, 
-                peircing: 0, 
-                radioactive: false, 
-                spread: false, 
-                stun: false,
-                vicious: true
+                vicious: true, 
+                ..default_damage_effects
             },
             properties: Properties{
-                accurate:false, 
-                blast:false, 
                 close_quarters:true, 
-                concealed:false, 
-                debilitating: false, 
-                gattling:false,
-                inaccurate:false,
-                mine:false,
-                nightvision:false,
-                parry:false,
-                recon:false, 
-                reliable:false,
-                suppressed:false,
-                thrown:false,
-                two_handed:false,
-                unreliable:false
+                ..default_properties
             },
             fire_rate:1, 
             weight:4.0, 
@@ -117,32 +126,11 @@ pub fn weapon_table_setup() {
             damage_rating: 4, 
             damage_type: DamageType::Physical, 
             damage_effects: DamageEffects{
-                burst: false, 
-                breaking: false, 
-                persistant: false, 
-                peircing: 0, 
-                radioactive: false, 
-                spread: false, 
-                stun: false,
-                vicious: false
+                ..default_damage_effects
             },
             properties: Properties{
-                accurate:false, 
-                blast:false, 
                 close_quarters:true, 
-                concealed:false, 
-                debilitating: false, 
-                gattling:false,
-                inaccurate:false,
-                mine:false,
-                nightvision:false,
-                parry:false,
-                recon:false, 
-                reliable:true,
-                suppressed:false,
-                thrown:false,
-                two_handed:false,
-                unreliable:false
+                ..default_properties
             },
             fire_rate:2, 
             weight:4.0, 
@@ -157,32 +145,11 @@ pub fn weapon_table_setup() {
             damage_rating: 3, 
             damage_type: DamageType::Physical, 
             damage_effects: DamageEffects{
-                burst: false, 
-                breaking: false, 
-                persistant: false, 
-                peircing: 0, 
-                radioactive: false, 
-                spread: false, 
-                stun: false,
-                vicious: false
+                ..default_damage_effects
             },
             properties: Properties{
-                accurate:false, 
-                blast:false, 
-                close_quarters:false, 
-                concealed:false, 
-                debilitating: false, 
-                gattling:false,
-                inaccurate:false,
-                mine:false,
-                nightvision:false,
-                parry:false,
-                recon:false, 
                 reliable:true,
-                suppressed:false,
-                thrown:false,
-                two_handed:false,
-                unreliable:false
+                ..default_properties
             },
             fire_rate:0, 
             weight:2.0, 
@@ -197,32 +164,12 @@ pub fn weapon_table_setup() {
             damage_rating: 5, 
             damage_type: DamageType::Physical, 
             damage_effects: DamageEffects{
-                burst: true, 
-                breaking: false, 
-                persistant: false, 
-                peircing: 0, 
-                radioactive: false, 
-                spread: false, 
-                stun: false,
-                vicious: false
+                burst: true,
+                ..default_damage_effects
             },
             properties: Properties{
-                accurate:false, 
-                blast:false, 
-                close_quarters:false, 
-                concealed:false, 
-                debilitating: false, 
-                gattling:false,
-                inaccurate:false,
-                mine:false,
-                nightvision:false,
-                parry:false,
-                recon:false, 
-                reliable:false,
-                suppressed:false,
-                thrown:false,
                 two_handed:true,
-                unreliable:false
+                ..default_properties
             },
             fire_rate:2, 
             weight:13.0, 
@@ -237,32 +184,11 @@ pub fn weapon_table_setup() {
             damage_rating: 5, 
             damage_type: DamageType::Physical, 
             damage_effects: DamageEffects{
-                burst: false, 
-                breaking: false, 
-                persistant: false, 
-                peircing: 0, 
-                radioactive: false, 
-                spread: false, 
-                stun: false,
-                vicious: false
+                ..default_damage_effects
             },
             properties: Properties{
-                accurate:false, 
-                blast:false, 
-                close_quarters:false, 
-                concealed:false, 
-                debilitating: false, 
-                gattling:false,
-                inaccurate:false,
-                mine:false,
-                nightvision:false,
-                parry:false,
-                recon:false, 
-                reliable:false,
-                suppressed:false,
-                thrown:false,
                 two_handed:true,
-                unreliable:false
+                ..default_properties
             },
             fire_rate:2, 
             weight:11.0, 
@@ -277,32 +203,12 @@ pub fn weapon_table_setup() {
             damage_rating: 10, 
             damage_type: DamageType::Physical, 
             damage_effects: DamageEffects{
-                burst: false, 
-                breaking: false, 
-                persistant: false, 
-                peircing: 1, 
-                radioactive: false, 
-                spread: false, 
-                stun: false,
-                vicious: false
+                peircing: 1,
+                ..default_damage_effects
             },
             properties: Properties{
-                accurate:false, 
-                blast:false, 
-                close_quarters:false, 
-                concealed:false, 
-                debilitating: false, 
-                gattling:false,
-                inaccurate:false,
-                mine:false,
-                nightvision:false,
-                parry:false,
-                recon:false, 
-                reliable:false,
-                suppressed:false,
-                thrown:false,
                 two_handed:true,
-                unreliable:false
+                ..default_properties
             },
             fire_rate:1, 
             weight:16.0, 
@@ -317,32 +223,13 @@ pub fn weapon_table_setup() {
             damage_rating: 6, 
             damage_type: DamageType::Physical, 
             damage_effects: DamageEffects{
-                burst: false, 
-                breaking: false, 
-                persistant: false, 
-                peircing: 1, 
-                radioactive: false, 
-                spread: false, 
-                stun: false,
-                vicious: false
+                peircing: 1,
+                ..default_damage_effects
             },
             properties: Properties{
-                accurate:false, 
-                blast:false, 
                 close_quarters:true, 
-                concealed:false, 
-                debilitating: false, 
-                gattling:false,
-                inaccurate:false,
-                mine:false,
-                nightvision:false,
-                parry:false,
-                recon:false, 
-                reliable:false,
-                suppressed:false,
-                thrown:false,
                 two_handed:true,
-                unreliable:false
+                ..default_properties
             },
             fire_rate:0, 
             weight:10.0, 
@@ -357,32 +244,13 @@ pub fn weapon_table_setup() {
             damage_rating: 3, 
             damage_type: DamageType::Physical, 
             damage_effects: DamageEffects{
-                burst: true, 
-                breaking: false, 
-                persistant: false, 
-                peircing: 0, 
-                radioactive: false, 
-                spread: false, 
-                stun: false,
-                vicious: false
+                burst: true,
+                ..default_damage_effects
             },
             properties: Properties{
-                accurate:false, 
-                blast:false, 
-                close_quarters:false, 
-                concealed:false, 
-                debilitating: false, 
-                gattling:false,
                 inaccurate:true,
-                mine:false,
-                nightvision:false,
-                parry:false,
-                recon:false, 
-                reliable:false,
-                suppressed:false,
-                thrown:false,
                 two_handed:true,
-                unreliable:false
+                ..default_properties
             },
             fire_rate:3, 
             weight:12.0, 
@@ -397,32 +265,13 @@ pub fn weapon_table_setup() {
             damage_rating: 5, 
             damage_type: DamageType::Physical, 
             damage_effects: DamageEffects{
-                burst: false, 
-                breaking: false, 
-                persistant: false, 
-                peircing: 0, 
-                radioactive: false, 
-                spread: true, 
-                stun: false,
-                vicious: false
+                spread: true,
+                ..default_damage_effects
             },
             properties: Properties{
-                accurate:false, 
-                blast:false, 
-                close_quarters:false, 
-                concealed:false, 
-                debilitating: false, 
-                gattling:false,
                 inaccurate:true,
-                mine:false,
-                nightvision:false,
-                parry:false,
-                recon:false, 
-                reliable:false,
-                suppressed:false,
-                thrown:false,
                 two_handed:true,
-                unreliable:false
+                ..default_properties
             },
             fire_rate:2, 
             weight:11.0, 
@@ -437,32 +286,14 @@ pub fn weapon_table_setup() {
             damage_rating: 5, 
             damage_type: DamageType::Physical, 
             damage_effects: DamageEffects{
-                burst: false, 
-                breaking: false, 
-                persistant: false, 
-                peircing: 0, 
-                radioactive: false, 
                 spread: true, 
-                stun: false,
-                vicious: true
+                vicious: true,
+                ..default_damage_effects                    
             },
             properties: Properties{
-                accurate:false, 
-                blast:false, 
-                close_quarters:false, 
-                concealed:false, 
-                debilitating: false, 
-                gattling:false,
                 inaccurate:true,
-                mine:false,
-                nightvision:false,
-                parry:false,
-                recon:false, 
-                reliable:false,
-                suppressed:false,
-                thrown:false,
                 two_handed:true,
-                unreliable:false
+                ..default_properties
             },
             fire_rate:0, 
             weight:9.0, 
@@ -477,32 +308,12 @@ pub fn weapon_table_setup() {
             damage_rating: 5, 
             damage_type: DamageType::Physical, 
             damage_effects: DamageEffects{
-                burst: false, 
-                breaking: false, 
-                persistant: false, 
-                peircing: 1, 
-                radioactive: false, 
-                spread: false, 
-                stun: false,
-                vicious: false
+                peircing: 1,
+                ..default_damage_effects
             },
             properties: Properties{
-                accurate:false, 
-                blast:false, 
-                close_quarters:false, 
-                concealed:false, 
-                debilitating: false, 
-                gattling:false,
-                inaccurate:false,
-                mine:false,
-                nightvision:false,
-                parry:false,
-                recon:false, 
-                reliable:false,
-                suppressed:false,
-                thrown:false,
-                two_handed:false,
-                unreliable:true
+                unreliable:true,
+                ..default_properties
             },
             fire_rate:0, 
             weight:3.0, 
@@ -517,32 +328,12 @@ pub fn weapon_table_setup() {
             damage_rating: 3, 
             damage_type: DamageType::Physical, 
             damage_effects: DamageEffects{
-                burst: false, 
-                breaking: false, 
-                persistant: false, 
-                peircing: 0, 
-                radioactive: false, 
-                spread: false, 
-                stun: false,
-                vicious: false
+                ..default_damage_effects
             },
             properties: Properties{
-                accurate:false, 
-                blast:false, 
                 close_quarters:true, 
-                concealed:false, 
-                debilitating: false, 
-                gattling:false,
-                inaccurate:false,
-                mine:false,
-                nightvision:false,
-                parry:false,
-                recon:false, 
-                reliable:false,
-                suppressed:false,
-                thrown:false,
-                two_handed:false,
-                unreliable:true
+                unreliable:true,
+                ..default_properties
             },
             fire_rate:2, 
             weight:2.0, 
@@ -557,32 +348,12 @@ pub fn weapon_table_setup() {
             damage_rating: 4, 
             damage_type: DamageType::Physical, 
             damage_effects: DamageEffects{
-                burst: false, 
-                breaking: false, 
-                persistant: false, 
-                peircing: 0, 
-                radioactive: false, 
-                spread: false, 
-                stun: false,
-                vicious: false
+                ..default_damage_effects
             },
             properties: Properties{
-                accurate:false, 
-                blast:false, 
                 close_quarters:true, 
-                concealed:false, 
-                debilitating: false, 
-                gattling:false,
-                inaccurate:false,
-                mine:false,
-                nightvision:false,
-                parry:false,
-                recon:false, 
-                reliable:false,
-                suppressed:false,
-                thrown:false,
-                two_handed:false,
-                unreliable:true
+                unreliable:true,
+                ..default_properties
             },
             fire_rate:1, 
             weight:4.0, 
@@ -597,32 +368,14 @@ pub fn weapon_table_setup() {
             damage_rating: 10, 
             damage_type: DamageType::Physical, 
             damage_effects: DamageEffects{
-                burst: false, 
-                breaking: true, 
-                persistant: false, 
-                peircing: 0, 
-                radioactive: false, 
-                spread: false, 
-                stun: false,
-                vicious: false
+                breaking: true,
+                ..default_damage_effects
             },
             properties: Properties{
-                accurate:false, 
-                blast:false, 
-                close_quarters:false, 
-                concealed:false, 
                 debilitating: true, 
-                gattling:false,
-                inaccurate:false,
-                mine:false,
-                nightvision:false,
-                parry:false,
-                recon:false, 
-                reliable:false,
-                suppressed:false,
-                thrown:false,
                 two_handed:true,
-                unreliable:true
+                unreliable:true,
+                ..default_properties
             },
             fire_rate:0, 
             weight:14.0, 
@@ -637,67 +390,17 @@ pub fn weapon_table_setup() {
             damage_rating: 3, 
             damage_type: DamageType::Physical, 
             damage_effects: DamageEffects{
-                burst: false, 
-                breaking: false, 
-                persistant: false, 
-                peircing: 0, 
-                radioactive: false, 
-                spread: false, 
-                stun: false,
-                vicious: false
+                ..default_damage_effects
             },
             properties: Properties{
-                accurate:false, 
-                blast:false, 
-                close_quarters:false, 
-                concealed:false, 
-                debilitating: false, 
-                gattling:false,
-                inaccurate:false,
-                mine:false,
-                nightvision:false,
-                parry:false,
-                recon:false, 
-                reliable:false,
-                suppressed:false,
-                thrown:false,
                 two_handed:true,
-                unreliable:false
+                ..default_properties
             },
             fire_rate:0, 
             weight:6.0, 
             ammunition:AMMO_TYPE[17].to_string(),
             range: Range::Medium
         },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//        "10mm Pistol",
-//        "Flare gun",
-//        "Assault Rifle",
-//        "Combat Rifle",
-//        "Gauss Rifle",
-//        "Hunting Rifle",
-//        "Submachine Gun",
-//        "Semi-automatic Shotgun",
-//        "Double Barreled Shotgun",
-//        "Pipe bolt-action Gun",
-//        "Pipe-Gun",
-//        "Pipe-Revolver",
-//        "Railway Rifle",
-//        "Syringer",
     ];
     let EnergyWeaponList = vec![
         "Institute Laser",
