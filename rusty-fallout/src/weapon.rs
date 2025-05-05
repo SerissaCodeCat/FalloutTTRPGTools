@@ -40,6 +40,7 @@ pub struct Properties {
     two_handed: bool,
     unreliable: bool,
 }
+
 pub struct DamageEffects {
     burst: bool,
     breaking: bool,
@@ -63,6 +64,73 @@ pub struct Weapon {
     weight: f32,
     ammunition: String,
     range: Range,
+}
+impl Weapon{
+    fn apply_hardened_mod(&mut self) -> bool {
+        self.damage_rating = self.damage_rating+2;
+        return true;
+    }
+    fn apply_powerful_mod(&mut self) -> bool {
+        self.damage_rating = self.damage_rating+2;
+        return true;
+    }
+    fn apply_advanced_mod(&mut self) -> bool {
+        self.damage_rating = self.damage_rating + 3;
+        self.fire_rate = self.fire_rate+1;
+        return true;
+    }
+    fn apply_calibrated_mod(&mut self) -> bool {
+        if self.damage_effects.vicious != true {
+            self.damage_effects.vicious = true;
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    fn apply_automatic_mod(&mut self) ->bool {
+        if self.properties.inaccurate == true {
+            return false;
+        }
+        if self.damage_effects.burst == true {
+            return  false;
+        }
+        else {
+            self.damage_rating = self.damage_rating - 1;
+            self.fire_rate = self.fire_rate + 2;
+            self.properties.inaccurate = true;
+            self.damage_effects.burst = true;
+            return true;
+        }
+    }
+    fn apply_hair_trigger_mod (&mut self) -> bool {
+        self.fire_rate = self.fire_rate + 1;
+        return true;
+    }
+    fn apply_snubnosed_mod(&mut self) -> bool {
+        if self.properties.accurate == true {
+            self.properties.accurate = false;
+        }
+        else if self.properties.inaccurate == true {
+            return false;
+        }
+        else {
+            self.properties.inaccurate = true;
+        }
+        return true;
+    }
+    fn apply_bull_barrel_mod(&mut self) -> bool {
+        if self.properties.unreliable == true {
+            self.properties.unreliable = false;
+        }
+        else if self.properties.reliable == true {
+            return false;
+        }
+        else {
+            self.properties.reliable = true;
+        }
+        return true;
+    }
 }
 
 pub const AMMO_TYPE:[&str; 20] = [".308", ".44", ".45", ".50", "10mm", "5mm", "5,56", "shotgun shell", "Missile", "2mm EC", "Flamer Fuel", "Fusion Cell", "Gamma Round", "Plasma Cartridge", "Fusion Core", "Mini Nuke", "Flare", "Syringer Ammo", ".38", "Railway Spike" ];
