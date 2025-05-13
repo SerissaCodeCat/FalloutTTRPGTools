@@ -9,6 +9,31 @@ pub enum WeaponType {
     Unarmed,
     Thowing,
 }
+#[derive(PartialEq, Eq)]
+pub enum AmmoType {
+    None,
+    Point308,
+    Point44,
+    Point45,
+    Point50,
+    TenMillimeter,
+    FiveMilimeter,
+    FivePointFiveSix,
+    ShotgunShell,
+    Missile,
+    TwoMilimeterEC,
+    FlamerFuel,
+    FusionCell,
+    GammaRound,
+    PlasmaCartridge,
+    FusionCore,
+    MiniNuke,
+    Flare,
+    SyringerAmmo,
+    Point38,
+    RailwaySpike,
+}
+
 pub enum DamageType {
     Physical,
     Energy,
@@ -62,7 +87,7 @@ pub struct Weapon {
     fire_rate: i8,
     properties: Properties,
     weight: f32,
-    ammunition: String,
+    ammunition: AmmoType,
     range: Range,
 }
 impl Weapon {
@@ -106,34 +131,35 @@ impl Weapon {
         return true;
     }
     fn apply_point_38_mod(&mut self) -> bool {
-        if self.ammunition != AMMO_TYPE[18].to_string() {
+        if self.ammunition != AmmoType::Point38 {
             self.damage_rating = 4;
-            self.ammunition = AMMO_TYPE[18].to_string();
+            self.ammunition = AmmoType::Point38;
             return true;
         }
         return false;
     }
     fn apply_point_308_mod(&mut self) -> bool {
-        if self.ammunition != AMMO_TYPE[0].to_string() {
+        if self.ammunition != AmmoType::Point308 {
             self.damage_rating = 9;
-            self.ammunition = AMMO_TYPE[0].to_string();
+            self.ammunition = AmmoType::Point308;
+            return true;
         }
         return false;
     }
 
     fn apply_point_45_mod(&mut self) -> bool {
-        if self.ammunition != AMMO_TYPE[2].to_string() {
+        if self.ammunition != AmmoType::Point45 {
             self.damage_rating = 4;
-            self.ammunition = AMMO_TYPE[2].to_string();
+            self.ammunition = AmmoType::Point45;
             self.fire_rate = self.fire_rate + 1;
             return true;
         }
         return false;
     }
     fn apply_point_50_mod(&mut self) -> bool {
-        if self.ammunition != AMMO_TYPE[3].to_string() {
+        if self.ammunition != AmmoType::Point50 {
             self.damage_rating = 8;
-            self.ammunition = AMMO_TYPE[3].to_string();
+            self.ammunition = AmmoType::Point50;
             self.damage_effects.vicious = true;
             return true;
         }
@@ -171,30 +197,6 @@ impl Weapon {
         return true;
     }
 }
-
-pub const AMMO_TYPE: [&str; 20] = [
-    ".308",
-    ".44",
-    ".45",
-    ".50",
-    "10mm",
-    "5mm",
-    "5,56",
-    "shotgun shell",
-    "Missile",
-    "2mm EC",
-    "Flamer Fuel",
-    "Fusion Cell",
-    "Gamma Round",
-    "Plasma Cartridge",
-    "Fusion Core",
-    "Mini Nuke",
-    "Flare",
-    "Syringer Ammo",
-    ".38",
-    "Railway Spike",
-];
-
 pub fn weapon_table_setup() {
     let default_properties = Properties {
         accurate: false,
@@ -242,7 +244,7 @@ pub fn weapon_table_setup() {
             },
             fire_rate: 1,
             weight: 4.0,
-            ammunition: AMMO_TYPE[1].to_string(),
+            ammunition: AmmoType::Point44,
             range: Range::Close,
         },
         Weapon {
@@ -261,7 +263,7 @@ pub fn weapon_table_setup() {
             },
             fire_rate: 2,
             weight: 4.0,
-            ammunition: AMMO_TYPE[4].to_string(),
+            ammunition: AmmoType::TenMillimeter,
             range: Range::Close,
         },
         Weapon {
@@ -280,7 +282,7 @@ pub fn weapon_table_setup() {
             },
             fire_rate: 0,
             weight: 2.0,
-            ammunition: AMMO_TYPE[17].to_string(),
+            ammunition: AmmoType::Flare,
             range: Range::Medium,
         },
         Weapon {
@@ -300,7 +302,7 @@ pub fn weapon_table_setup() {
             },
             fire_rate: 2,
             weight: 13.0,
-            ammunition: AMMO_TYPE[6].to_string(),
+            ammunition: AmmoType::FivePointFiveSix,
             range: Range::Medium,
         },
         Weapon {
@@ -319,7 +321,7 @@ pub fn weapon_table_setup() {
             },
             fire_rate: 2,
             weight: 11.0,
-            ammunition: AMMO_TYPE[2].to_string(),
+            ammunition: AmmoType::Point45,
             range: Range::Medium,
         },
         Weapon {
@@ -339,7 +341,7 @@ pub fn weapon_table_setup() {
             },
             fire_rate: 1,
             weight: 16.0,
-            ammunition: AMMO_TYPE[0].to_string(),
+            ammunition: AmmoType::TwoMilimeterEC,
             range: Range::Medium,
         },
         Weapon {
@@ -360,7 +362,7 @@ pub fn weapon_table_setup() {
             },
             fire_rate: 0,
             weight: 10.0,
-            ammunition: AMMO_TYPE[1].to_string(),
+            ammunition: AmmoType::Point308,
             range: Range::Close,
         },
         Weapon {
@@ -381,7 +383,7 @@ pub fn weapon_table_setup() {
             },
             fire_rate: 3,
             weight: 12.0,
-            ammunition: AMMO_TYPE[2].to_string(),
+            ammunition: AmmoType::Point45,
             range: Range::Close,
         },
         Weapon {
@@ -402,7 +404,7 @@ pub fn weapon_table_setup() {
             },
             fire_rate: 2,
             weight: 11.0,
-            ammunition: AMMO_TYPE[7].to_string(),
+            ammunition: AmmoType::ShotgunShell,
             range: Range::Close,
         },
         Weapon {
@@ -424,7 +426,7 @@ pub fn weapon_table_setup() {
             },
             fire_rate: 0,
             weight: 9.0,
-            ammunition: AMMO_TYPE[7].to_string(),
+            ammunition: AmmoType::ShotgunShell,
             range: Range::Close,
         },
         Weapon {
@@ -444,7 +446,7 @@ pub fn weapon_table_setup() {
             },
             fire_rate: 0,
             weight: 3.0,
-            ammunition: AMMO_TYPE[0].to_string(),
+            ammunition: AmmoType::Point308,
             range: Range::Close,
         },
         Weapon {
@@ -464,7 +466,7 @@ pub fn weapon_table_setup() {
             },
             fire_rate: 2,
             weight: 2.0,
-            ammunition: AMMO_TYPE[18].to_string(),
+            ammunition: AmmoType::Point38,
             range: Range::Close,
         },
         Weapon {
@@ -484,7 +486,7 @@ pub fn weapon_table_setup() {
             },
             fire_rate: 1,
             weight: 4.0,
-            ammunition: AMMO_TYPE[2].to_string(),
+            ammunition: AmmoType::Point45,
             range: Range::Close,
         },
         Weapon {
@@ -506,7 +508,7 @@ pub fn weapon_table_setup() {
             },
             fire_rate: 0,
             weight: 14.0,
-            ammunition: AMMO_TYPE[19].to_string(),
+            ammunition: AmmoType::RailwaySpike,
             range: Range::Medium,
         },
         Weapon {
@@ -525,7 +527,7 @@ pub fn weapon_table_setup() {
             },
             fire_rate: 0,
             weight: 6.0,
-            ammunition: AMMO_TYPE[17].to_string(),
+            ammunition: AmmoType::SyringerAmmo,
             range: Range::Medium,
         },
     ];
@@ -548,7 +550,7 @@ pub fn weapon_table_setup() {
                 ..default_properties
             },
             weight: 4.0,
-            ammunition: AMMO_TYPE[11].to_string(),
+            ammunition: AmmoType::FusionCell,
             range: Range::Close,
         },
         Weapon {
@@ -568,7 +570,7 @@ pub fn weapon_table_setup() {
                 ..default_properties
             },
             weight: 13.0,
-            ammunition: AMMO_TYPE[11].to_string(),
+            ammunition: AmmoType::FusionCell,
             range: Range::Medium,
         },
         Weapon {
@@ -588,7 +590,7 @@ pub fn weapon_table_setup() {
                 ..default_properties
             },
             weight: 4.0,
-            ammunition: AMMO_TYPE[11].to_string(),
+            ammunition: AmmoType::FusionCell,
             range: Range::Close,
         },
         Weapon {
@@ -609,7 +611,7 @@ pub fn weapon_table_setup() {
                 ..default_properties
             },
             weight: 4.0,
-            ammunition: AMMO_TYPE[13].to_string(),
+            ammunition: AmmoType::PlasmaCartridge,
             range: Range::Close,
         },
         Weapon {
@@ -631,7 +633,7 @@ pub fn weapon_table_setup() {
                 ..default_properties
             },
             weight: 3.0,
-            ammunition: AMMO_TYPE[12].to_string(),
+            ammunition: AmmoType::GammaRound,
             range: Range::Close,
         },
     ];
