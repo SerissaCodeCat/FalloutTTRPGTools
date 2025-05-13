@@ -1,5 +1,6 @@
 use std::{io, string};
 
+#[derive(PartialEq, Eq)]
 pub enum WeaponType {
     SmallGun,
     BigGun,
@@ -9,6 +10,7 @@ pub enum WeaponType {
     Unarmed,
     Thowing,
 }
+
 #[derive(PartialEq, Eq)]
 pub enum AmmoType {
     None,
@@ -34,6 +36,7 @@ pub enum AmmoType {
     RailwaySpike,
 }
 
+#[derive(PartialEq, Eq)]
 pub enum DamageType {
     Physical,
     Energy,
@@ -41,12 +44,15 @@ pub enum DamageType {
     Radiation,
     Poison,
 }
+
+#[derive(PartialEq, Eq)]
 pub enum Range {
     Close,
     Medium,
     Long,
     Extream,
 }
+
 pub struct Properties {
     accurate: bool,
     blast: bool,
@@ -90,21 +96,25 @@ pub struct Weapon {
     ammunition: AmmoType,
     range: Range,
 }
+
 impl Weapon {
-    fn apply_hardened_mod(&mut self) -> bool {
+    /////////////////
+    //RECIEVER MODS//
+    /////////////////
+    fn apply_hardened_reciever_mod(&mut self) -> bool {
         self.damage_rating = self.damage_rating + 2;
         return true;
     }
-    fn apply_powerful_mod(&mut self) -> bool {
+    fn apply_powerful_reciever_mod(&mut self) -> bool {
         self.damage_rating = self.damage_rating + 2;
         return true;
     }
-    fn apply_advanced_mod(&mut self) -> bool {
+    fn apply_advanced_reciever_mod(&mut self) -> bool {
         self.damage_rating = self.damage_rating + 3;
         self.fire_rate = self.fire_rate + 1;
         return true;
     }
-    fn apply_calibrated_mod(&mut self) -> bool {
+    fn apply_calibrated_reciever_mod(&mut self) -> bool {
         if self.damage_effects.vicious != true {
             self.damage_effects.vicious = true;
             return true;
@@ -112,7 +122,7 @@ impl Weapon {
             return false;
         }
     }
-    fn apply_automatic_mod(&mut self) -> bool {
+    fn apply_automatic_reciever_mod(&mut self) -> bool {
         if self.properties.inaccurate == true {
             return false;
         }
@@ -126,11 +136,11 @@ impl Weapon {
             return true;
         }
     }
-    fn apply_hair_trigger_mod(&mut self) -> bool {
+    fn apply_hair_trigger_reciever_mod(&mut self) -> bool {
         self.fire_rate = self.fire_rate + 1;
         return true;
     }
-    fn apply_point_38_mod(&mut self) -> bool {
+    fn apply_point_38_reciever_mod(&mut self) -> bool {
         if self.ammunition != AmmoType::Point38 {
             self.damage_rating = 4;
             self.ammunition = AmmoType::Point38;
@@ -138,7 +148,7 @@ impl Weapon {
         }
         return false;
     }
-    fn apply_point_308_mod(&mut self) -> bool {
+    fn apply_point_308_reciever_mod(&mut self) -> bool {
         if self.ammunition != AmmoType::Point308 {
             self.damage_rating = 9;
             self.ammunition = AmmoType::Point308;
@@ -147,7 +157,7 @@ impl Weapon {
         return false;
     }
 
-    fn apply_point_45_mod(&mut self) -> bool {
+    fn apply_point_45_reciever_mod(&mut self) -> bool {
         if self.ammunition != AmmoType::Point45 {
             self.damage_rating = 4;
             self.ammunition = AmmoType::Point45;
@@ -156,7 +166,7 @@ impl Weapon {
         }
         return false;
     }
-    fn apply_point_50_mod(&mut self) -> bool {
+    fn apply_point_50_reciever_mod(&mut self) -> bool {
         if self.ammunition != AmmoType::Point50 {
             self.damage_rating = 8;
             self.ammunition = AmmoType::Point50;
@@ -165,7 +175,7 @@ impl Weapon {
         }
         return false;
     }
-    fn apply_automatic_piston_mod(&mut self) -> bool {
+    fn apply_automatic_piston_reciever_mod(&mut self) -> bool {
         match self.range {
             Range::Close => return false,
             Range::Medium => self.range = Range::Close,
@@ -176,14 +186,18 @@ impl Weapon {
         return true;
     }
 
-    fn apply_snubnosed_mod(&mut self) -> bool {
-        if self.properties.accurate == true {
-            self.properties.accurate = false;
-        } else if self.properties.inaccurate == true {
+    ////////////////
+    //BARREL MODS //
+    ////////////////
+    fn apply_snubnosed_barrel_mod(&mut self) -> bool {
+        if self.properties.inaccurate == true {
             return false;
+        } else if self.properties.accurate == true {
+            self.properties.accurate = false;
         } else {
             self.properties.inaccurate = true;
         }
+        self.weight = self.weight - 1.0;
         return true;
     }
     fn apply_bull_barrel_mod(&mut self) -> bool {
@@ -194,6 +208,73 @@ impl Weapon {
         } else {
             self.properties.reliable = true;
         }
+        self.value = self.value + 10;
+        return true;
+    }
+    fn apply_long_barrel_mod(&mut self) -> bool {
+        match self.range {
+            Range::Close => self.range = Range::Medium,
+            Range::Medium => self.range = Range::Long,
+            Range::Long => self.range = Range::Extream,
+            Range::Extream => return false,
+        }
+        self.weight = self.weight + 1.0;
+        self.value = self.value + 20;
+        return true;
+    }
+    fn apply_ported_barrel_mod(&mut self) -> bool {
+        match self.range {
+            Range::Close => self.range = Range::Medium,
+            Range::Medium => self.range = Range::Long,
+            Range::Long => self.range = Range::Extream,
+            Range::Extream => return false,
+        }
+        self.weight = self.weight + 1.0;
+        self.fire_rate = self.fire_rate + 1;
+        self.value = self.value + 35;
+        return true;
+    }
+    fn apply_vented_barrel_mod(&mut self) -> bool {
+        if self.properties.reliable == true {
+            return false;
+        } else if self.properties.unreliable == true {
+            self.properties.unreliable = false;
+        } else {
+            self.properties.reliable = true;
+        }
+        match self.range {
+            Range::Close => self.range = Range::Medium,
+            Range::Medium => self.range = Range::Long,
+            Range::Long => self.range = Range::Extream,
+            Range::Extream => return false,
+        }
+        self.fire_rate = self.fire_rate + 1;
+        self.weight = self.weight + 1.0;
+        self.value = self.value + 36;
+        return true;
+    }
+    fn apply_sawn_off_mod(&mut self) -> bool {
+        if self.properties.two_handed == false {
+            return false;
+        } else if self.properties.close_quarters == true {
+            return false;
+        }
+        self.properties.two_handed = true;
+        self.properties.close_quarters = true;
+        self.weight = self.weight - 2.0;
+        self.value = self.value + 3;
+        return true;
+    }
+    fn apply_finned_barrel_mod(&mut self) -> bool {
+        match self.range {
+            Range::Close => self.range = Range::Medium,
+            Range::Medium => self.range = Range::Long,
+            Range::Long => self.range = Range::Extream,
+            Range::Extream => return false,
+        }
+        self.damage_rating = self.damage_rating + 1;
+        self.value = self.value + 15;
+        self.weight = self.weight + 2.0;
         return true;
     }
 }
