@@ -95,6 +95,7 @@ pub struct Weapon {
     weight: f32,
     ammunition: AmmoType,
     range: Range,
+    specialNotes: String,
 }
 
 impl Weapon {
@@ -369,6 +370,41 @@ impl Weapon {
     ////////////////
     // SIGHT MODS //
     ////////////////
+
+    fn apply_reflex_sight_mod(&mut self) -> bool {
+        self.specialNotes
+            .push_str("/n May re-roll hit location dice");
+        self.value += 14;
+        return true;
+    }
+
+    fn apply_short_scope_mod(&mut self) -> bool {
+        if self.properties.accurate == true {
+            return false;
+        } else if self.properties.inaccurate == true {
+            self.properties.inaccurate = false;
+        } else {
+            self.properties.accurate = true
+        }
+        self.weight += 1.0;
+        self.value += 11;
+        return true;
+    }
+
+    fn apply_long_scope_mod(&mut self) -> bool {
+        match self.range {
+            Range::Close => self.range = Range::Medium,
+            Range::Medium => self.range = Range::Long,
+            Range::Long => self.range = Range::Extream,
+            Range::Extream => return false,
+        }
+        let tmp = self.apply_short_scope_mod();
+        if tmp == false {
+            return false;
+        }
+        self.value += 18;
+        return true;
+    }
 }
 pub fn weapon_table_setup() {
     let default_properties = Properties {
