@@ -390,7 +390,6 @@ impl Weapon {
         self.value += 11;
         return true;
     }
-
     fn apply_long_scope_mod(&mut self) -> bool {
         match self.range {
             Range::Close => self.range = Range::Medium,
@@ -403,6 +402,78 @@ impl Weapon {
             return false;
         }
         self.value += 18;
+        return true;
+    }
+    fn apply_short_night_scope(&mut self) -> bool {
+        let tmp = self.apply_short_scope_mod();
+        if tmp == false {
+            return false;
+        }
+        if self.properties.nightvision == true {
+            return false;
+        }
+        self.properties.nightvision = true;
+        self.value += 27;
+        return true;
+    }
+    fn apply_long_night_scope_mod(&mut self) -> bool {
+        let tmp = self.apply_long_scope_mod();
+        if tmp == false {
+            return true;
+        }
+        if self.properties.nightvision == true {
+            return false;
+        }
+        self.properties.nightvision = true;
+        self.value += 21;
+        return true;
+    }
+    fn apply_recon_scope_mod(&mut self) -> bool {
+        if self.properties.accurate == true {
+            return false;
+        }
+        if self.properties.recon == true {
+            return false;
+        }
+        if self.properties.inaccurate == true {
+            self.properties.inaccurate = false;
+        } else {
+            self.properties.accurate = true;
+        }
+        self.properties.recon = true;
+        self.weight += 1.0;
+        self.value += 59;
+        return true;
+    }
+
+    /////////////////
+    // MUZZLE MODS //
+    /////////////////
+
+    fn apply_bayonet_mod(&mut self) -> bool {
+        self.specialNotes
+            .push_str("/n Melee weapon, deals DR4, Peircing: 1, Physical damage type");
+        self.weight += 2.0;
+        self.value += 10;
+        return true;
+    }
+    fn apply_compensator_mod(&mut self) -> bool {
+        if self.properties.inaccurate == false {
+            return true;
+        }
+        self.properties.inaccurate = false;
+        self.weight += 1.0;
+        self.value += 15;
+        return true;
+    }
+    fn apply_muzzle_break_mod(&mut self) -> bool {
+        if self.properties.inaccurate == false {
+            return false;
+        }
+        self.properties.inaccurate = false;
+        self.fire_rate += 1;
+        self.weight += 1.0;
+        self.value += 30;
         return true;
     }
 }
@@ -455,6 +526,7 @@ pub fn weapon_table_setup() {
             weight: 4.0,
             ammunition: AmmoType::Point44,
             range: Range::Close,
+            specialNotes: String::from(""),
         },
         Weapon {
             name: String::from("10mm Pistol"),
@@ -474,6 +546,7 @@ pub fn weapon_table_setup() {
             weight: 4.0,
             ammunition: AmmoType::TenMillimeter,
             range: Range::Close,
+            specialNotes: String::from(""),
         },
         Weapon {
             name: String::from("Flare Gun"),
@@ -493,6 +566,7 @@ pub fn weapon_table_setup() {
             weight: 2.0,
             ammunition: AmmoType::Flare,
             range: Range::Medium,
+            specialNotes: String::from(""),
         },
         Weapon {
             name: String::from("Assault Rifle"),
@@ -513,6 +587,7 @@ pub fn weapon_table_setup() {
             weight: 13.0,
             ammunition: AmmoType::FivePointFiveSix,
             range: Range::Medium,
+            specialNotes: String::from(""),
         },
         Weapon {
             name: String::from("Combat Rifle"),
@@ -532,6 +607,7 @@ pub fn weapon_table_setup() {
             weight: 11.0,
             ammunition: AmmoType::Point45,
             range: Range::Medium,
+            specialNotes: String::from(""),
         },
         Weapon {
             name: String::from("Gauss Rifle"),
@@ -552,6 +628,7 @@ pub fn weapon_table_setup() {
             weight: 16.0,
             ammunition: AmmoType::TwoMilimeterEC,
             range: Range::Medium,
+            specialNotes: String::from(""),
         },
         Weapon {
             name: String::from("Hunting Rifle"),
@@ -573,6 +650,7 @@ pub fn weapon_table_setup() {
             weight: 10.0,
             ammunition: AmmoType::Point308,
             range: Range::Close,
+            specialNotes: String::from(""),
         },
         Weapon {
             name: String::from("Submachine Gun"),
@@ -594,6 +672,7 @@ pub fn weapon_table_setup() {
             weight: 12.0,
             ammunition: AmmoType::Point45,
             range: Range::Close,
+            specialNotes: String::from(""),
         },
         Weapon {
             name: String::from("Automatic Shotgun"),
@@ -615,6 +694,7 @@ pub fn weapon_table_setup() {
             weight: 11.0,
             ammunition: AmmoType::ShotgunShell,
             range: Range::Close,
+            specialNotes: String::from(""),
         },
         Weapon {
             name: String::from("Double Barreled Shotgun"),
@@ -637,6 +717,7 @@ pub fn weapon_table_setup() {
             weight: 9.0,
             ammunition: AmmoType::ShotgunShell,
             range: Range::Close,
+            specialNotes: String::from(""),
         },
         Weapon {
             name: String::from("Pipe bolt-action"),
@@ -657,6 +738,7 @@ pub fn weapon_table_setup() {
             weight: 3.0,
             ammunition: AmmoType::Point308,
             range: Range::Close,
+            specialNotes: String::from(""),
         },
         Weapon {
             name: String::from("Pipe Gun"),
@@ -677,6 +759,7 @@ pub fn weapon_table_setup() {
             weight: 2.0,
             ammunition: AmmoType::Point38,
             range: Range::Close,
+            specialNotes: String::from(""),
         },
         Weapon {
             name: String::from("Pipe-Revolver"),
@@ -697,6 +780,7 @@ pub fn weapon_table_setup() {
             weight: 4.0,
             ammunition: AmmoType::Point45,
             range: Range::Close,
+            specialNotes: String::from(""),
         },
         Weapon {
             name: String::from("Railway Rifle"),
@@ -719,6 +803,7 @@ pub fn weapon_table_setup() {
             weight: 14.0,
             ammunition: AmmoType::RailwaySpike,
             range: Range::Medium,
+            specialNotes: String::from(""),
         },
         Weapon {
             name: String::from("Syringer"),
@@ -738,6 +823,7 @@ pub fn weapon_table_setup() {
             weight: 6.0,
             ammunition: AmmoType::SyringerAmmo,
             range: Range::Medium,
+            specialNotes: String::from(""),
         },
     ];
     let energy_weapon = vec![
@@ -761,6 +847,7 @@ pub fn weapon_table_setup() {
             weight: 4.0,
             ammunition: AmmoType::FusionCell,
             range: Range::Close,
+            specialNotes: String::from(""),
         },
         Weapon {
             name: String::from("Laser Musket"),
@@ -781,6 +868,7 @@ pub fn weapon_table_setup() {
             weight: 13.0,
             ammunition: AmmoType::FusionCell,
             range: Range::Medium,
+            specialNotes: String::from(""),
         },
         Weapon {
             name: String::from("Laser Gun"),
@@ -801,6 +889,7 @@ pub fn weapon_table_setup() {
             weight: 4.0,
             ammunition: AmmoType::FusionCell,
             range: Range::Close,
+            specialNotes: String::from(""),
         },
         Weapon {
             name: String::from("Plasma Gun"),
@@ -822,6 +911,7 @@ pub fn weapon_table_setup() {
             weight: 4.0,
             ammunition: AmmoType::PlasmaCartridge,
             range: Range::Close,
+            specialNotes: String::from(""),
         },
         Weapon {
             name: String::from("Gamma Gun"),
@@ -844,6 +934,7 @@ pub fn weapon_table_setup() {
             weight: 3.0,
             ammunition: AmmoType::GammaRound,
             range: Range::Close,
+            specialNotes: String::from(""),
         },
     ];
     let big_guns = vec![
