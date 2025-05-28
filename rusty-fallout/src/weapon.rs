@@ -54,48 +54,48 @@ pub enum Range {
 }
 
 pub struct Properties {
-    accurate: bool,
-    blast: bool,
-    close_quarters: bool,
-    concealed: bool,
-    debilitating: bool,
-    gattling: bool,
-    inaccurate: bool,
-    mine: bool,
-    nightvision: bool,
-    parry: bool,
-    recon: bool,
-    reliable: bool,
-    suppressed: bool,
-    thrown: bool,
-    two_handed: bool,
-    unreliable: bool,
+    pub accurate: bool,
+    pub blast: bool,
+    pub close_quarters: bool,
+    pub concealed: bool,
+    pub debilitating: bool,
+    pub gattling: bool,
+    pub inaccurate: bool,
+    pub mine: bool,
+    pub nightvision: bool,
+    pub parry: bool,
+    pub recon: bool,
+    pub reliable: bool,
+    pub suppressed: bool,
+    pub thrown: bool,
+    pub two_handed: bool,
+    pub unreliable: bool,
 }
 
 pub struct DamageEffects {
-    burst: bool,
-    breaking: bool,
-    persistant: bool,
-    peircing: i8,
-    radioactive: bool,
-    spread: bool,
-    stun: bool,
-    vicious: bool,
+    pub burst: bool,
+    pub breaking: bool,
+    pub persistant: bool,
+    pub peircing: i8,
+    pub radioactive: bool,
+    pub spread: bool,
+    pub stun: bool,
+    pub vicious: bool,
 }
 pub struct Weapon {
-    name: String,
-    rarity: i8,
-    value: i32,
-    weapon_type: WeaponType,
-    damage_rating: i8,
-    damage_type: DamageType,
-    damage_effects: DamageEffects,
-    fire_rate: i8,
-    properties: Properties,
-    weight: f32,
-    ammunition: AmmoType,
-    range: Range,
-    specialNotes: String,
+    pub name: String,
+    pub rarity: i8,
+    pub value: i32,
+    pub weapon_type: WeaponType,
+    pub damage_rating: i8,
+    pub damage_type: DamageType,
+    pub damage_effects: DamageEffects,
+    pub fire_rate: i8,
+    pub properties: Properties,
+    pub weight: f32,
+    pub ammunition: AmmoType,
+    pub range: Range,
+    pub specialNotes: String,
 }
 
 impl Weapon {
@@ -478,465 +478,6 @@ impl Weapon {
     }
 }
 pub fn weapon_table_setup() {
-    let default_properties = Properties {
-        accurate: false,
-        blast: false,
-        close_quarters: false,
-        concealed: false,
-        debilitating: false,
-        gattling: false,
-        inaccurate: false,
-        mine: false,
-        nightvision: false,
-        parry: false,
-        recon: false,
-        reliable: false,
-        suppressed: false,
-        thrown: false,
-        two_handed: false,
-        unreliable: false,
-    };
-    let default_damage_effects = DamageEffects {
-        burst: false,
-        breaking: false,
-        persistant: false,
-        peircing: 0,
-        radioactive: false,
-        spread: false,
-        stun: false,
-        vicious: false,
-    };
-    let small_gun_list = [
-        Weapon {
-            name: String::from(".44 Pistol"),
-            rarity: 2,
-            value: 99,
-            weapon_type: WeaponType::SmallGun,
-            damage_rating: 6,
-            damage_type: DamageType::Physical,
-            damage_effects: DamageEffects {
-                vicious: true,
-                ..default_damage_effects
-            },
-            properties: Properties {
-                close_quarters: true,
-                ..default_properties
-            },
-            fire_rate: 1,
-            weight: 4.0,
-            ammunition: AmmoType::Point44,
-            range: Range::Close,
-            specialNotes: String::from(""),
-        },
-        Weapon {
-            name: String::from("10mm Pistol"),
-            rarity: 1,
-            value: 50,
-            weapon_type: WeaponType::SmallGun,
-            damage_rating: 4,
-            damage_type: DamageType::Physical,
-            damage_effects: DamageEffects {
-                ..default_damage_effects
-            },
-            properties: Properties {
-                close_quarters: true,
-                ..default_properties
-            },
-            fire_rate: 2,
-            weight: 4.0,
-            ammunition: AmmoType::TenMillimeter,
-            range: Range::Close,
-            specialNotes: String::from(""),
-        },
-        Weapon {
-            name: String::from("Flare Gun"),
-            rarity: 1,
-            value: 50,
-            weapon_type: WeaponType::SmallGun,
-            damage_rating: 3,
-            damage_type: DamageType::Physical,
-            damage_effects: DamageEffects {
-                ..default_damage_effects
-            },
-            properties: Properties {
-                reliable: true,
-                ..default_properties
-            },
-            fire_rate: 0,
-            weight: 2.0,
-            ammunition: AmmoType::Flare,
-            range: Range::Medium,
-            specialNotes: String::from(""),
-        },
-        Weapon {
-            name: String::from("Assault Rifle"),
-            rarity: 2,
-            value: 144,
-            weapon_type: WeaponType::SmallGun,
-            damage_rating: 5,
-            damage_type: DamageType::Physical,
-            damage_effects: DamageEffects {
-                burst: true,
-                ..default_damage_effects
-            },
-            properties: Properties {
-                two_handed: true,
-                ..default_properties
-            },
-            fire_rate: 2,
-            weight: 13.0,
-            ammunition: AmmoType::FivePointFiveSix,
-            range: Range::Medium,
-            specialNotes: String::from(""),
-        },
-        Weapon {
-            name: String::from("Combat Rifle"),
-            rarity: 2,
-            value: 117,
-            weapon_type: WeaponType::SmallGun,
-            damage_rating: 5,
-            damage_type: DamageType::Physical,
-            damage_effects: DamageEffects {
-                ..default_damage_effects
-            },
-            properties: Properties {
-                two_handed: true,
-                ..default_properties
-            },
-            fire_rate: 2,
-            weight: 11.0,
-            ammunition: AmmoType::Point45,
-            range: Range::Medium,
-            specialNotes: String::from(""),
-        },
-        Weapon {
-            name: String::from("Gauss Rifle"),
-            rarity: 4,
-            value: 228,
-            weapon_type: WeaponType::SmallGun,
-            damage_rating: 10,
-            damage_type: DamageType::Physical,
-            damage_effects: DamageEffects {
-                peircing: 1,
-                ..default_damage_effects
-            },
-            properties: Properties {
-                two_handed: true,
-                ..default_properties
-            },
-            fire_rate: 1,
-            weight: 16.0,
-            ammunition: AmmoType::TwoMilimeterEC,
-            range: Range::Medium,
-            specialNotes: String::from(""),
-        },
-        Weapon {
-            name: String::from("Hunting Rifle"),
-            rarity: 2,
-            value: 55,
-            weapon_type: WeaponType::SmallGun,
-            damage_rating: 6,
-            damage_type: DamageType::Physical,
-            damage_effects: DamageEffects {
-                peircing: 1,
-                ..default_damage_effects
-            },
-            properties: Properties {
-                close_quarters: true,
-                two_handed: true,
-                ..default_properties
-            },
-            fire_rate: 0,
-            weight: 10.0,
-            ammunition: AmmoType::Point308,
-            range: Range::Close,
-            specialNotes: String::from(""),
-        },
-        Weapon {
-            name: String::from("Submachine Gun"),
-            rarity: 1,
-            value: 109,
-            weapon_type: WeaponType::SmallGun,
-            damage_rating: 3,
-            damage_type: DamageType::Physical,
-            damage_effects: DamageEffects {
-                burst: true,
-                ..default_damage_effects
-            },
-            properties: Properties {
-                inaccurate: true,
-                two_handed: true,
-                ..default_properties
-            },
-            fire_rate: 3,
-            weight: 12.0,
-            ammunition: AmmoType::Point45,
-            range: Range::Close,
-            specialNotes: String::from(""),
-        },
-        Weapon {
-            name: String::from("Automatic Shotgun"),
-            rarity: 2,
-            value: 87,
-            weapon_type: WeaponType::SmallGun,
-            damage_rating: 5,
-            damage_type: DamageType::Physical,
-            damage_effects: DamageEffects {
-                spread: true,
-                ..default_damage_effects
-            },
-            properties: Properties {
-                inaccurate: true,
-                two_handed: true,
-                ..default_properties
-            },
-            fire_rate: 2,
-            weight: 11.0,
-            ammunition: AmmoType::ShotgunShell,
-            range: Range::Close,
-            specialNotes: String::from(""),
-        },
-        Weapon {
-            name: String::from("Double Barreled Shotgun"),
-            rarity: 1,
-            value: 39,
-            weapon_type: WeaponType::SmallGun,
-            damage_rating: 5,
-            damage_type: DamageType::Physical,
-            damage_effects: DamageEffects {
-                spread: true,
-                vicious: true,
-                ..default_damage_effects
-            },
-            properties: Properties {
-                inaccurate: true,
-                two_handed: true,
-                ..default_properties
-            },
-            fire_rate: 0,
-            weight: 9.0,
-            ammunition: AmmoType::ShotgunShell,
-            range: Range::Close,
-            specialNotes: String::from(""),
-        },
-        Weapon {
-            name: String::from("Pipe bolt-action"),
-            rarity: 0,
-            value: 30,
-            weapon_type: WeaponType::SmallGun,
-            damage_rating: 5,
-            damage_type: DamageType::Physical,
-            damage_effects: DamageEffects {
-                peircing: 1,
-                ..default_damage_effects
-            },
-            properties: Properties {
-                unreliable: true,
-                ..default_properties
-            },
-            fire_rate: 0,
-            weight: 3.0,
-            ammunition: AmmoType::Point308,
-            range: Range::Close,
-            specialNotes: String::from(""),
-        },
-        Weapon {
-            name: String::from("Pipe Gun"),
-            rarity: 0,
-            value: 30,
-            weapon_type: WeaponType::SmallGun,
-            damage_rating: 3,
-            damage_type: DamageType::Physical,
-            damage_effects: DamageEffects {
-                ..default_damage_effects
-            },
-            properties: Properties {
-                close_quarters: true,
-                unreliable: true,
-                ..default_properties
-            },
-            fire_rate: 2,
-            weight: 2.0,
-            ammunition: AmmoType::Point38,
-            range: Range::Close,
-            specialNotes: String::from(""),
-        },
-        Weapon {
-            name: String::from("Pipe-Revolver"),
-            rarity: 0,
-            value: 25,
-            weapon_type: WeaponType::SmallGun,
-            damage_rating: 4,
-            damage_type: DamageType::Physical,
-            damage_effects: DamageEffects {
-                ..default_damage_effects
-            },
-            properties: Properties {
-                close_quarters: true,
-                unreliable: true,
-                ..default_properties
-            },
-            fire_rate: 1,
-            weight: 4.0,
-            ammunition: AmmoType::Point45,
-            range: Range::Close,
-            specialNotes: String::from(""),
-        },
-        Weapon {
-            name: String::from("Railway Rifle"),
-            rarity: 4,
-            value: 290,
-            weapon_type: WeaponType::SmallGun,
-            damage_rating: 10,
-            damage_type: DamageType::Physical,
-            damage_effects: DamageEffects {
-                breaking: true,
-                ..default_damage_effects
-            },
-            properties: Properties {
-                debilitating: true,
-                two_handed: true,
-                unreliable: true,
-                ..default_properties
-            },
-            fire_rate: 0,
-            weight: 14.0,
-            ammunition: AmmoType::RailwaySpike,
-            range: Range::Medium,
-            specialNotes: String::from(""),
-        },
-        Weapon {
-            name: String::from("Syringer"),
-            rarity: 2,
-            value: 132,
-            weapon_type: WeaponType::SmallGun,
-            damage_rating: 3,
-            damage_type: DamageType::Physical,
-            damage_effects: DamageEffects {
-                ..default_damage_effects
-            },
-            properties: Properties {
-                two_handed: true,
-                ..default_properties
-            },
-            fire_rate: 0,
-            weight: 6.0,
-            ammunition: AmmoType::SyringerAmmo,
-            range: Range::Medium,
-            specialNotes: String::from(""),
-        },
-    ];
-    let energy_weapon = vec![
-        Weapon {
-            name: String::from("Institute Laser"),
-            rarity: 2,
-            value: 50,
-            weapon_type: WeaponType::Energy,
-            damage_rating: 3,
-            damage_type: DamageType::Energy,
-            damage_effects: DamageEffects {
-                burst: true,
-                ..default_damage_effects
-            },
-            fire_rate: 3,
-            properties: Properties {
-                close_quarters: true,
-                inaccurate: true,
-                ..default_properties
-            },
-            weight: 4.0,
-            ammunition: AmmoType::FusionCell,
-            range: Range::Close,
-            specialNotes: String::from(""),
-        },
-        Weapon {
-            name: String::from("Laser Musket"),
-            rarity: 1,
-            value: 57,
-            weapon_type: WeaponType::Energy,
-            damage_rating: 5,
-            damage_type: DamageType::Energy,
-            damage_effects: DamageEffects {
-                peircing: 1,
-                ..default_damage_effects
-            },
-            fire_rate: 0,
-            properties: Properties {
-                two_handed: true,
-                ..default_properties
-            },
-            weight: 13.0,
-            ammunition: AmmoType::FusionCell,
-            range: Range::Medium,
-            specialNotes: String::from(""),
-        },
-        Weapon {
-            name: String::from("Laser Gun"),
-            rarity: 2,
-            value: 69,
-            weapon_type: WeaponType::Energy,
-            damage_rating: 4,
-            damage_type: DamageType::Energy,
-            damage_effects: DamageEffects {
-                peircing: 1,
-                ..default_damage_effects
-            },
-            fire_rate: 3,
-            properties: Properties {
-                close_quarters: true,
-                ..default_properties
-            },
-            weight: 4.0,
-            ammunition: AmmoType::FusionCell,
-            range: Range::Close,
-            specialNotes: String::from(""),
-        },
-        Weapon {
-            name: String::from("Plasma Gun"),
-            rarity: 3,
-            value: 123,
-            weapon_type: WeaponType::Energy,
-            damage_rating: 3,
-            damage_type: DamageType::EnergyAndPhysical,
-            damage_effects: DamageEffects {
-                burst: true,
-                ..default_damage_effects
-            },
-            fire_rate: 3,
-            properties: Properties {
-                close_quarters: true,
-                inaccurate: true,
-                ..default_properties
-            },
-            weight: 4.0,
-            ammunition: AmmoType::PlasmaCartridge,
-            range: Range::Close,
-            specialNotes: String::from(""),
-        },
-        Weapon {
-            name: String::from("Gamma Gun"),
-            rarity: 5,
-            value: 156,
-            weapon_type: WeaponType::Energy,
-            damage_rating: 3,
-            damage_type: DamageType::Radiation,
-            damage_effects: DamageEffects {
-                peircing: 1,
-                stun: true,
-                ..default_damage_effects
-            },
-            fire_rate: 3,
-            properties: Properties {
-                blast: true,
-                inaccurate: true,
-                ..default_properties
-            },
-            weight: 3.0,
-            ammunition: AmmoType::GammaRound,
-            range: Range::Close,
-            specialNotes: String::from(""),
-        },
-    ];
     let big_guns = vec![
         "Fat Man",
         "Flamer",

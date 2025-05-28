@@ -1,6 +1,8 @@
 use rand::random_range;
 use std::{io, string};
 
+pub mod energy_weapons_list;
+pub mod small_guns_list;
 pub mod utility;
 pub mod weapon;
 fn main() {
