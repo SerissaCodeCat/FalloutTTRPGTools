@@ -20,10 +20,10 @@ fn main() {
         \n 
         ENTER YOUR OPTION \n"
         );
-        let menu_option = convert_input_to_int();
+        let menu_option = utility::convert_input_to_int();
         match menu_option {
             1 => weapon_loot_generator(),
-            2 => 
+            2 => shop_weapon_inventory_generator(),
             3 => weapon::weapon_table_setup(),
             0 => exit_function(),
             _ => break,
@@ -33,7 +33,7 @@ fn main() {
 fn weapon_loot_generator() {
     println!("LOOT TABLE GOES HERE");
 }
-fn shop_weapon_inventory_generator(){
+fn shop_weapon_inventory_generator() {
     println!("under development");
 }
 fn location_and_map_generator() {
@@ -65,7 +65,7 @@ fn player_weapon_planner() {
 //        .expect("could not read input.");
 //    return tmp.trim().parse().expect("please enter a number");
 //}
-//fn exit_function() {
-//    println!("data saving goes here, and then exit");
-//    std::process::exit(0);
-//}
+fn exit_function() {
+    println!("data saving goes here, and then exit");
+    std::process::exit(0);
+}
