@@ -1,4 +1,36 @@
-let energy_weapon = vec![
+use std::vec;
+
+use crate::weapon::*;
+pub fn create_energy_weapon_list() -> Vec<Weapon> {
+    let default_properties = Properties {
+        accurate: false,
+        blast: false,
+        close_quarters: false,
+        concealed: false,
+        debilitating: false,
+        gattling: false,
+        inaccurate: false,
+        mine: false,
+        nightvision: false,
+        parry: false,
+        recon: false,
+        reliable: false,
+        suppressed: false,
+        thrown: false,
+        two_handed: false,
+        unreliable: false,
+    };
+    let default_damage_effects = DamageEffects {
+        burst: false,
+        breaking: false,
+        persistant: false,
+        peircing: 0,
+        radioactive: false,
+        spread: false,
+        stun: false,
+        vicious: false,
+    };
+    return vec![
         Weapon {
             name: String::from("Institute Laser"),
             rarity: 2,
@@ -109,4 +141,4 @@ let energy_weapon = vec![
             specialNotes: String::from(""),
         },
     ];
-
+}

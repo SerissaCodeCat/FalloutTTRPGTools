@@ -24,47 +24,27 @@ fn main() {
         match menu_option {
             1 => weapon_loot_generator(),
             2 => shop_weapon_inventory_generator(),
-            3 => weapon::weapon_table_setup(),
+            3 => player_weapon_planner(),
+            4 => location_and_map_generator(),
             0 => exit_function(),
             _ => break,
         }
     }
 }
 fn weapon_loot_generator() {
-    println!("LOOT TABLE GOES HERE");
+    let gun_list = small_guns_list::create_small_gun_list();
+    let random_weapon = random_range(0..gun_list.len());
+    print!("{}", gun_list[random_weapon]);
 }
 fn shop_weapon_inventory_generator() {
     println!("under development");
 }
+fn player_weapon_planner() {
+    println!("under development")
+}
 fn location_and_map_generator() {
     println!("under development.");
 }
-fn player_weapon_planner() {
-    println!("under development");
-}
-//fn convert_input_to_bool() -> bool {
-//    loop {
-//        let mut tmp = String::new();
-//        io::stdin()
-//            .read_line(&mut tmp)
-//            .expect("failed to read line.");
-//        if tmp.trim() == "Y" || tmp.trim() == "y" {
-//            return true;
-//        } else if tmp.trim() == "N" || tmp.trim() == "n" {
-//            return false;
-//        } else {
-//            println!("please enter Y or N");
-//        };
-//    }
-//}
-//fn convert_input_to_int() -> i32 {
-//    let mut tmp = String::new();
-//    println!("please enter a number");
-//    io::stdin()
-//        .read_line(&mut tmp)
-//        .expect("could not read input.");
-//    return tmp.trim().parse().expect("please enter a number");
-//}
 fn exit_function() {
     println!("data saving goes here, and then exit");
     std::process::exit(0);

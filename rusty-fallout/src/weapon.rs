@@ -1,6 +1,7 @@
+use std::fmt;
 use std::{io, string};
 
-#[derive(PartialEq, Eq)]
+#[derive(PartialEq, Eq, Debug)]
 pub enum WeaponType {
     SmallGun,
     BigGun,
@@ -9,6 +10,13 @@ pub enum WeaponType {
     Melee,
     Unarmed,
     Thowing,
+}
+
+impl fmt::Display for WeaponType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self)
+        //write!(f, "Type: {}", self.weapon_type)
+    }
 }
 
 #[derive(PartialEq, Eq)]
@@ -36,13 +44,19 @@ pub enum AmmoType {
     RailwaySpike,
 }
 
-#[derive(PartialEq, Eq)]
+#[derive(PartialEq, Eq, Debug)]
 pub enum DamageType {
     Physical,
     Energy,
     EnergyAndPhysical,
     Radiation,
     Poison,
+}
+impl fmt::Display for DamageType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self)
+        //write!(f, "Type: {}", self.weapon_type)
+    }
 }
 
 #[derive(PartialEq, Eq)]
@@ -98,6 +112,16 @@ pub struct Weapon {
     pub specialNotes: String,
 }
 
+impl fmt::Display for Weapon {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(
+            f,
+            "Name: {}\nType: {}\nDamage Rating: {}\nDamage Type: {}",
+            self.name, self.weapon_type, self.damage_rating, self.damage_type
+        )
+        //write!(f, "Type: {}", self.weapon_type)
+    }
+}
 impl Weapon {
     /////////////////
     //RECIEVER MODS//
@@ -477,69 +501,69 @@ impl Weapon {
         return true;
     }
 }
-pub fn weapon_table_setup() {
-    let big_guns = vec![
-        "Fat Man",
-        "Flamer",
-        "Gatling Laser",
-        "Heavy Incinerator",
-        "Junk Jet",
-        "Minigun",
-        "Missile Launcher",
-    ];
-
-    let melee_weapons = vec![
-        "Sword",
-        "Combat Knife",
-        "Machete",
-        "Ripper",
-        "Shishkebab",
-        "Switchblade",
-        "Baseball bat",
-        "Aluminium Bat",
-        "Board",
-        "Lead Pipe",
-        "Pipe Wrench",
-        "Pool Que",
-        "Rolling Pin",
-        "Baton",
-        "Sledgehammer",
-        "Super Sledge",
-        "Tire Iron",
-        "walking Cane",
-        "Boxing Glove",
-        "Deathclaw Gauntlet",
-        "Brass Knuckles",
-        "Power Fist",
-    ];
-
-    let mut weapon_rarity = 10;
-    println!("do you want a modified weapon? Y/N");
-    let modded_weapon = crate::utility::convert_input_to_bool();
-    println!("do you want to specify a rarity? Y/N");
-    let set_rarity = crate::utility::convert_input_to_bool();
-    if set_rarity {
-        print!("enter the maximum rarity level:");
-        weapon_rarity = crate::utility::convert_input_to_int();
-    }
-    basic_weapon_table(modded_weapon, weapon_rarity);
-}
-pub fn basic_weapon_table(create_modded_weapon: bool, create_weapon_of_rarity_level: i32) {
-    println!("BASIC WEAPON TABLE GOES HERE");
-    println!(
-        "select weapon rarity range: {}",
-        create_weapon_of_rarity_level.to_string()
-    );
-    println!("modify weapon: {}", create_modded_weapon.to_string());
-    //if (create_modded_weapon) {
-    //    weapon_mod_table(incoming);
-    //}
-}
-pub fn random_weapon_of_rarity(incoming: i32) -> String {
-    let mut return_val = String::from("a weapon of rarity value:").to_owned();
-    return_val.push_str(&incoming.to_string());
-    return return_val;
-}
-pub fn weapon_mod_table(incoming: &String) {
-    println!("weapon mod goes here, after taking in the weapon type of {incoming}, and limmiting mods to availiable mods for said weapon");
-}
+//pub fn weapon_table_setup() {
+//   let big_guns = vec![
+//        "Fat Man",
+//        "Flamer",
+//        "Gatling Laser",
+//        "Heavy Incinerator",
+//        "Junk Jet",
+//        "Minigun",
+//        "Missile Launcher",
+//    ];
+//
+//    let melee_weapons = vec![
+//        "Sword",
+//        "Combat Knife",
+//        "Machete",
+//        "Ripper",
+//        "Shishkebab",
+//        "Switchblade",
+//        "Baseball bat",
+//        "Aluminium Bat",
+//        "Board",
+//        "Lead Pipe",
+//        "Pipe Wrench",
+//       "Pool Que",
+//        "Rolling Pin",
+//        "Baton",
+//        "Sledgehammer",
+//        "Super Sledge",
+//        "Tire Iron",
+//        "walking Cane",
+//        "Boxing Glove",
+//        "Deathclaw Gauntlet",
+//        "Brass Knuckles",
+//        "Power Fist",
+//    ];
+//
+//    let mut weapon_rarity = 10;
+//    println!("do you want a modified weapon? Y/N");
+//    let modded_weapon = crate::utility::convert_input_to_bool();
+//    println!("do you want to specify a rarity? Y/N");
+//    let set_rarity = crate::utility::convert_input_to_bool();
+//    if set_rarity {
+//        print!("enter the maximum rarity level:");
+//        weapon_rarity = crate::utility::convert_input_to_int();
+//    }
+//    basic_weapon_table(modded_weapon, weapon_rarity);
+//}
+//pub fn basic_weapon_table(create_modded_weapon: bool, create_weapon_of_rarity_level: i32) {
+//    println!("BASIC WEAPON TABLE GOES HERE");
+//    println!(
+//        "select weapon rarity range: {}",
+//        create_weapon_of_rarity_level.to_string()
+//    );
+//    println!("modify weapon: {}", create_modded_weapon.to_string());
+//if (create_modded_weapon) {
+//    weapon_mod_table(incoming);
+//}
+//}
+//pub fn random_weapon_of_rarity(incoming: i32) -> String {
+//    let mut return_val = String::from("a weapon of rarity value:").to_owned();
+//    return_val.push_str(&incoming.to_string());
+//    return return_val;
+//}
+//pub fn weapon_mod_table(incoming: &String) {
+//    println!("weapon mod goes here, after taking in the weapon type of {incoming}, and limmiting mods to availiable mods for said weapon");
+//}
