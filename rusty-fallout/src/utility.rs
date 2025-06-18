@@ -16,7 +16,6 @@ pub fn convert_input_to_bool() -> bool {
 }
 pub fn convert_input_to_int() -> i32 {
     let mut tmp = String::new();
-    println!("please enter a number");
     io::stdin()
         .read_line(&mut tmp)
         .expect("could not read input.");

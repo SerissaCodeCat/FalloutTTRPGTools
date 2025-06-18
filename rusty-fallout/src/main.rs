@@ -12,13 +12,13 @@ fn main() {
     loop {
         print!(
             "\n 
-        1) WEAPON LOOT GENERATOR \n
-        2) SHOP WEAPON INVENTORY GENERATOR (under development) \n
-        3) PLAYER WEAPON PLANNER (under development) \n
-        4) LOCATION & MAP GENERATOR (under development) \n,
-        0) EXIT \n 
-        \n 
-        ENTER YOUR OPTION \n"
+1) WEAPON LOOT GENERATOR
+2) SHOP WEAPON INVENTORY GENERATOR (under development)
+3) PLAYER WEAPON PLANNER (under development)
+4) LOCATION & MAP GENERATOR (under development)
+0) EXIT
+         
+ENTER YOUR OPTION \n"
         );
         let menu_option = utility::convert_input_to_int();
         match menu_option {

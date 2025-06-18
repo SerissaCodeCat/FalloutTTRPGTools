@@ -59,12 +59,18 @@ impl fmt::Display for DamageType {
     }
 }
 
-#[derive(PartialEq, Eq)]
+#[derive(PartialEq, Eq, Debug)]
 pub enum Range {
     Close,
     Medium,
     Long,
     Extream,
+}
+impl fmt::Display for Range {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self)
+        //write!(f, "Type: {}", self.weapon_type)
+    }
 }
 
 pub struct Properties {
@@ -114,11 +120,48 @@ pub struct Weapon {
 
 impl fmt::Display for Weapon {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(
-            f,
-            "Name: {}\nType: {}\nDamage Rating: {}\nDamage Type: {}",
-            self.name, self.weapon_type, self.damage_rating, self.damage_type
-        )
+        let mut weapon_display = vec![
+            format!("//   Name: {}   //", self.name),
+            format!("//   Type: {}   //", self.weapon_type),
+            format!("//   Damage Type: {}   //", self.damage_type),
+            format!("//   Damage Rating: {}   //", self.damage_rating),
+            format!("//   Rate of Fire: {}   //", self.fire_rate),
+            format!("//   Range: {}   //", self.range),
+        ];
+        let mut longest_string = 0;
+        for x in &weapon_display {
+            if x.len() > longest_string {
+                longest_string = x.len();
+            }
+        }
+        for x in &mut weapon_display {
+            if x.len() != longest_string {
+                let mut tmp = longest_string - x.len();
+                let mut tmp_string_insert = String::from("");
+                while tmp >= 1 {
+                    tmp_string_insert.push(' ');
+                    tmp -= 1;
+                }
+                x.insert_str(x.len() - 3, &tmp_string_insert);
+            }
+        }
+        let mut result = String::new();
+        let mut headder_and_footer = String::new();
+        let mut tmp = 0;
+        while tmp != longest_string {
+            headder_and_footer.push('/');
+            tmp += 1;
+        }
+        result.push_str(&headder_and_footer);
+        result.push_str("\n");
+        for x in weapon_display {
+            result.push_str(&x);
+            result.push_str("\n");
+        }
+        result.push_str(&headder_and_footer);
+        result.push_str("\n");
+
+        write!(f, "{}", result)
         //write!(f, "Type: {}", self.weapon_type)
     }
 }
