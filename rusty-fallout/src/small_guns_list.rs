@@ -1,12 +1,6 @@
 use std::array;
 
 use crate::weapon::*;
-//use crate::weapon::DamageEffects;
-//use crate::weapon::DamageType;
-//use crate::weapon::Properties;
-//use crate::weapon::Range;
-//use crate::weapon::Weapon;
-//use crate::weapon::WeaponType;
 
 pub fn create_small_gun_list() -> Vec<Weapon> {
     let default_properties = Properties {

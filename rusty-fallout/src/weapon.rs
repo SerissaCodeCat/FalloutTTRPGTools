@@ -115,7 +115,7 @@ pub struct Weapon {
     pub weight: f32,
     pub ammunition: AmmoType,
     pub range: Range,
-    pub specialNotes: String,
+    pub special_notes: String,
 }
 
 impl fmt::Display for Weapon {
@@ -170,17 +170,26 @@ impl Weapon {
     //RECIEVER MODS//
     /////////////////
     fn apply_hardened_reciever_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         self.damage_rating += 1;
         self.value += 20;
         return true;
     }
     fn apply_powerful_reciever_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         self.damage_rating += 2;
         self.weight += 1.0;
         self.value += 25;
         return true;
     }
     fn apply_advanced_reciever_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         self.damage_rating = self.damage_rating + 3;
         self.fire_rate += 1;
         self.weight += 2.0;
@@ -188,6 +197,9 @@ impl Weapon {
         return true;
     }
     fn apply_calibrated_reciever_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         if self.damage_effects.vicious != true {
             self.damage_effects.vicious = true;
             self.value += 25;
@@ -197,6 +209,9 @@ impl Weapon {
         }
     }
     fn apply_automatic_reciever_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         if self.properties.inaccurate == true {
             return false;
         }
@@ -213,11 +228,17 @@ impl Weapon {
         }
     }
     fn apply_hair_trigger_reciever_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         self.fire_rate += 1;
         self.value += 20;
         return true;
     }
     fn apply_point_38_reciever_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         if self.ammunition != AmmoType::Point38 {
             self.damage_rating = 4;
             self.ammunition = AmmoType::Point38;
@@ -228,6 +249,9 @@ impl Weapon {
         return false;
     }
     fn apply_point_308_reciever_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         if self.ammunition != AmmoType::Point308 {
             self.damage_rating = 9;
             self.ammunition = AmmoType::Point308;
@@ -239,6 +263,9 @@ impl Weapon {
     }
 
     fn apply_point_45_reciever_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         if self.ammunition != AmmoType::Point45 {
             self.damage_rating = 4;
             self.ammunition = AmmoType::Point45;
@@ -250,6 +277,9 @@ impl Weapon {
         return false;
     }
     fn apply_point_50_reciever_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         if self.ammunition != AmmoType::Point50 {
             self.damage_rating = 8;
             self.ammunition = AmmoType::Point50;
@@ -261,6 +291,9 @@ impl Weapon {
         return false;
     }
     fn apply_automatic_piston_reciever_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         match self.range {
             Range::Close => return false,
             Range::Medium => self.range = Range::Close,
@@ -277,6 +310,9 @@ impl Weapon {
     //BARREL MODS //
     ////////////////
     fn apply_snubnosed_barrel_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         if self.properties.inaccurate == true {
             return false;
         } else if self.properties.accurate == true {
@@ -288,6 +324,9 @@ impl Weapon {
         return true;
     }
     fn apply_bull_barrel_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         if self.properties.unreliable == true {
             self.properties.unreliable = false;
         } else if self.properties.reliable == true {
@@ -299,6 +338,9 @@ impl Weapon {
         return true;
     }
     fn apply_long_barrel_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         match self.range {
             Range::Close => self.range = Range::Medium,
             Range::Medium => self.range = Range::Long,
@@ -310,6 +352,9 @@ impl Weapon {
         return true;
     }
     fn apply_ported_barrel_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         match self.range {
             Range::Close => self.range = Range::Medium,
             Range::Medium => self.range = Range::Long,
@@ -322,6 +367,9 @@ impl Weapon {
         return true;
     }
     fn apply_vented_barrel_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         if self.properties.reliable == true {
             return false;
         } else if self.properties.unreliable == true {
@@ -341,6 +389,9 @@ impl Weapon {
         return true;
     }
     fn apply_sawn_off_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         if self.properties.two_handed == false {
             return false;
         } else if self.properties.close_quarters == true {
@@ -353,6 +404,9 @@ impl Weapon {
         return true;
     }
     fn apply_finned_barrel_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         match self.range {
             Range::Close => self.range = Range::Medium,
             Range::Medium => self.range = Range::Long,
@@ -369,6 +423,9 @@ impl Weapon {
     // GRIP MODS //
     ///////////////
     fn apply_comfort_grip_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         if self.properties.inaccurate != true {
             return false;
         }
@@ -377,6 +434,9 @@ impl Weapon {
         return true;
     }
     fn apply_sharpshooters_grip_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         if self.properties.inaccurate != true {
             return false;
         }
@@ -390,6 +450,9 @@ impl Weapon {
     // STOCK MODS //
     ////////////////
     fn apply_full_stock_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         if self.properties.two_handed == true {
             return false;
         }
@@ -403,6 +466,9 @@ impl Weapon {
         return true;
     }
     fn apply_marksmans_stock_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         if self.properties.two_handed == true {
             return false;
         }
@@ -420,6 +486,9 @@ impl Weapon {
         return true;
     }
     fn apply_recoil_compensating_stock_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         if self.properties.two_handed == true {
             return false;
         }
@@ -439,13 +508,19 @@ impl Weapon {
     ////////////////
 
     fn apply_reflex_sight_mod(&mut self) -> bool {
-        self.specialNotes
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
+        self.special_notes
             .push_str("/n May re-roll hit location dice");
         self.value += 14;
         return true;
     }
 
     fn apply_short_scope_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         if self.properties.accurate == true {
             return false;
         } else if self.properties.inaccurate == true {
@@ -458,6 +533,9 @@ impl Weapon {
         return true;
     }
     fn apply_long_scope_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         match self.range {
             Range::Close => self.range = Range::Medium,
             Range::Medium => self.range = Range::Long,
@@ -472,6 +550,9 @@ impl Weapon {
         return true;
     }
     fn apply_short_night_scope(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         let tmp = self.apply_short_scope_mod();
         if tmp == false {
             return false;
@@ -484,6 +565,9 @@ impl Weapon {
         return true;
     }
     fn apply_long_night_scope_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         let tmp = self.apply_long_scope_mod();
         if tmp == false {
             return true;
@@ -496,6 +580,9 @@ impl Weapon {
         return true;
     }
     fn apply_recon_scope_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         if self.properties.accurate == true {
             return false;
         }
@@ -518,6 +605,9 @@ impl Weapon {
     /////////////////
 
     fn apply_bayonet_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         self.specialNotes
             .push_str("/n Melee weapon, deals DR4, Peircing: 1, Physical damage type");
         self.weight += 2.0;
@@ -525,6 +615,9 @@ impl Weapon {
         return true;
     }
     fn apply_compensator_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         if self.properties.inaccurate == false {
             return true;
         }
@@ -534,6 +627,9 @@ impl Weapon {
         return true;
     }
     fn apply_muzzle_break_mod(&mut self) -> bool {
+        if self.weapon_type != WeaponType::SmallGun {
+            return false;
+        }
         if self.properties.inaccurate == false {
             return false;
         }
