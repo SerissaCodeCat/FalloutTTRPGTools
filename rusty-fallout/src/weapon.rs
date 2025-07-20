@@ -1,10 +1,9 @@
 use std::fmt;
-use std::{io, string};
 
 #[derive(PartialEq, Eq, Debug)]
 pub enum WeaponType {
     SmallGun,
-    BigGun,
+    HeavyGun,
     Energy,
     Explosive,
     Melee,
@@ -608,7 +607,7 @@ impl Weapon {
         if self.weapon_type != WeaponType::SmallGun {
             return false;
         }
-        self.specialNotes
+        self.special_notes
             .push_str("/n Melee weapon, deals DR4, Peircing: 1, Physical damage type");
         self.weight += 2.0;
         self.value += 10;
@@ -640,17 +639,6 @@ impl Weapon {
         return true;
     }
 }
-//pub fn weapon_table_setup() {
-//   let big_guns = vec![
-//        "Fat Man",
-//        "Flamer",
-//        "Gatling Laser",
-//        "Heavy Incinerator",
-//        "Junk Jet",
-//        "Minigun",
-//        "Missile Launcher",
-//    ];
-//
 //    let melee_weapons = vec![
 //        "Sword",
 //        "Combat Knife",

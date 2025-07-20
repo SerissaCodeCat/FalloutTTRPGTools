@@ -51,7 +51,7 @@ pub fn create_energy_weapon_list() -> Vec<Weapon> {
             weight: 4.0,
             ammunition: AmmoType::FusionCell,
             range: Range::Close,
-            specialNotes: String::from(""),
+            special_notes: String::from(""),
         },
         Weapon {
             name: String::from("Laser Musket"),
@@ -72,7 +72,7 @@ pub fn create_energy_weapon_list() -> Vec<Weapon> {
             weight: 13.0,
             ammunition: AmmoType::FusionCell,
             range: Range::Medium,
-            specialNotes: String::from(""),
+            special_notes: String::from(""),
         },
         Weapon {
             name: String::from("Laser Gun"),
@@ -93,7 +93,7 @@ pub fn create_energy_weapon_list() -> Vec<Weapon> {
             weight: 4.0,
             ammunition: AmmoType::FusionCell,
             range: Range::Close,
-            specialNotes: String::from(""),
+            special_notes: String::from(""),
         },
         Weapon {
             name: String::from("Plasma Gun"),
@@ -115,7 +115,7 @@ pub fn create_energy_weapon_list() -> Vec<Weapon> {
             weight: 4.0,
             ammunition: AmmoType::PlasmaCartridge,
             range: Range::Close,
-            specialNotes: String::from(""),
+            special_notes: String::from(""),
         },
         Weapon {
             name: String::from("Gamma Gun"),
@@ -138,7 +138,7 @@ pub fn create_energy_weapon_list() -> Vec<Weapon> {
             weight: 3.0,
             ammunition: AmmoType::GammaRound,
             range: Range::Close,
-            specialNotes: String::from(""),
+            special_notes: String::from(""),
         },
     ];
 }

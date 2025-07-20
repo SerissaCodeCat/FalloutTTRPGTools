@@ -1,5 +1,3 @@
-use std::array;
-
 use crate::weapon::*;
 
 pub fn create_small_gun_list() -> Vec<Weapon> {
@@ -51,7 +49,7 @@ pub fn create_small_gun_list() -> Vec<Weapon> {
             weight: 4.0,
             ammunition: AmmoType::Point44,
             range: Range::Close,
-            specialNotes: String::from(""),
+            special_notes: String::from(""),
         },
         Weapon {
             name: String::from("10mm Pistol"),
@@ -71,7 +69,7 @@ pub fn create_small_gun_list() -> Vec<Weapon> {
             weight: 4.0,
             ammunition: AmmoType::TenMillimeter,
             range: Range::Close,
-            specialNotes: String::from(""),
+            special_notes: String::from(""),
         },
         Weapon {
             name: String::from("Flare Gun"),
@@ -91,7 +89,7 @@ pub fn create_small_gun_list() -> Vec<Weapon> {
             weight: 2.0,
             ammunition: AmmoType::Flare,
             range: Range::Medium,
-            specialNotes: String::from(""),
+            special_notes: String::from(""),
         },
         Weapon {
             name: String::from("Assault Rifle"),
@@ -112,7 +110,7 @@ pub fn create_small_gun_list() -> Vec<Weapon> {
             weight: 13.0,
             ammunition: AmmoType::FivePointFiveSix,
             range: Range::Medium,
-            specialNotes: String::from(""),
+            special_notes: String::from(""),
         },
         Weapon {
             name: String::from("Combat Rifle"),
@@ -132,7 +130,7 @@ pub fn create_small_gun_list() -> Vec<Weapon> {
             weight: 11.0,
             ammunition: AmmoType::Point45,
             range: Range::Medium,
-            specialNotes: String::from(""),
+            special_notes: String::from(""),
         },
         Weapon {
             name: String::from("Gauss Rifle"),
@@ -153,7 +151,7 @@ pub fn create_small_gun_list() -> Vec<Weapon> {
             weight: 16.0,
             ammunition: AmmoType::TwoMilimeterEC,
             range: Range::Medium,
-            specialNotes: String::from(""),
+            special_notes: String::from(""),
         },
         Weapon {
             name: String::from("Hunting Rifle"),
@@ -175,7 +173,7 @@ pub fn create_small_gun_list() -> Vec<Weapon> {
             weight: 10.0,
             ammunition: AmmoType::Point308,
             range: Range::Close,
-            specialNotes: String::from(""),
+            special_notes: String::from(""),
         },
         Weapon {
             name: String::from("Submachine Gun"),
@@ -197,7 +195,7 @@ pub fn create_small_gun_list() -> Vec<Weapon> {
             weight: 12.0,
             ammunition: AmmoType::Point45,
             range: Range::Close,
-            specialNotes: String::from(""),
+            special_notes: String::from(""),
         },
         Weapon {
             name: String::from("Automatic Shotgun"),
@@ -219,7 +217,7 @@ pub fn create_small_gun_list() -> Vec<Weapon> {
             weight: 11.0,
             ammunition: AmmoType::ShotgunShell,
             range: Range::Close,
-            specialNotes: String::from(""),
+            special_notes: String::from(""),
         },
         Weapon {
             name: String::from("Double Barreled Shotgun"),
@@ -242,7 +240,7 @@ pub fn create_small_gun_list() -> Vec<Weapon> {
             weight: 9.0,
             ammunition: AmmoType::ShotgunShell,
             range: Range::Close,
-            specialNotes: String::from(""),
+            special_notes: String::from(""),
         },
         Weapon {
             name: String::from("Pipe bolt-action"),
@@ -263,7 +261,7 @@ pub fn create_small_gun_list() -> Vec<Weapon> {
             weight: 3.0,
             ammunition: AmmoType::Point308,
             range: Range::Close,
-            specialNotes: String::from(""),
+            special_notes: String::from(""),
         },
         Weapon {
             name: String::from("Pipe Gun"),
@@ -284,7 +282,7 @@ pub fn create_small_gun_list() -> Vec<Weapon> {
             weight: 2.0,
             ammunition: AmmoType::Point38,
             range: Range::Close,
-            specialNotes: String::from(""),
+            special_notes: String::from(""),
         },
         Weapon {
             name: String::from("Pipe-Revolver"),
@@ -305,7 +303,7 @@ pub fn create_small_gun_list() -> Vec<Weapon> {
             weight: 4.0,
             ammunition: AmmoType::Point45,
             range: Range::Close,
-            specialNotes: String::from(""),
+            special_notes: String::from(""),
         },
         Weapon {
             name: String::from("Railway Rifle"),
@@ -328,7 +326,7 @@ pub fn create_small_gun_list() -> Vec<Weapon> {
             weight: 14.0,
             ammunition: AmmoType::RailwaySpike,
             range: Range::Medium,
-            specialNotes: String::from(""),
+            special_notes: String::from(""),
         },
         Weapon {
             name: String::from("Syringer"),
@@ -348,7 +346,7 @@ pub fn create_small_gun_list() -> Vec<Weapon> {
             weight: 6.0,
             ammunition: AmmoType::SyringerAmmo,
             range: Range::Medium,
-            specialNotes: String::from(""),
+            special_notes: String::from(""),
         },
     ];
 }
