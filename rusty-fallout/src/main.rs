@@ -2,6 +2,7 @@ use rand::random_range;
 
 pub mod energy_weapons_list;
 pub mod heavy_weapons_list;
+pub mod melee_weapons_list;
 pub mod small_guns_list;
 pub mod utility;
 pub mod weapon;
@@ -35,6 +36,7 @@ fn weapon_loot_generator() {
     let mut gun_list = small_guns_list::create_small_gun_list();
     gun_list.append(&mut energy_weapons_list::create_energy_weapon_list());
     gun_list.append(&mut heavy_weapons_list::create_heavy_weapon_list());
+    gun_list.append(&mut melee_weapons_list::create_melee_weapon_list());
     let random_weapon = random_range(0..gun_list.len());
     print!("{}", gun_list[random_weapon]);
 }
