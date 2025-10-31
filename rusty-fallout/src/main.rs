@@ -4,15 +4,9 @@ use crossterm::{
     terminal,
 };
 use ratatui::{
-    DefaultTerminal, Frame,
-    buffer::Buffer,
-    layout::Rect,
-    style::Stylize,
-    symbols::border,
-    text::{Line, Text},
-    widgets::{Block, Paragraph, Widget},
+    DefaultTerminal, Frame, buffer::Buffer, layout::{Layout, Rect}, prelude::*, style::Stylize, symbols::border, text::{Line, Text}, widgets::{Block, Borders, Paragraph, Widget}
 };
-use std::io;
+use std::{io, vec};
 
 pub mod energy_weapons_list;
 pub mod heavy_weapons_list;
@@ -20,12 +14,15 @@ pub mod melee_weapons_list;
 pub mod small_guns_list;
 pub mod utility;
 pub mod weapon;
+
 fn main() -> io::Result<()> {
+    
     let mut terminal = ratatui::init(); //allowing the app complete
     let app_result = App::default().run(&mut terminal);
     ratatui::restore(); //return control of the Terminal to standard.
     return app_result;
 }
+
 
 #[derive(Debug, Default)]
 pub struct App {
@@ -33,6 +30,7 @@ pub struct App {
     counter: u8,
 }
 impl App {
+    
     pub fn run(&mut self, terminal: &mut DefaultTerminal) -> io::Result<()> {
         while !self.exit {
             terminal.draw(|frame| self.draw(frame))?;
@@ -42,7 +40,35 @@ impl App {
     }
 
     fn draw(&self, frame: &mut Frame) {
-        frame.render_widget(self, frame.area());
+        let outer_layout = Layout::default()
+        .direction(ratatui::layout::Direction::Horizontal)
+        .margin(2)
+        .constraints([
+            Constraint::Percentage(20), 
+            Constraint::Percentage(80)
+            ]
+            .as_ref())
+        .split(frame.area());
+
+    let inner_layout = Layout::default()
+        .direction(ratatui::layout::Direction::Vertical)
+        .margin(0)
+        .constraints([
+                ratatui::layout::Constraint::Percentage(20),
+                ratatui::layout::Constraint::Percentage(80),
+            ]
+            .as_ref(),
+        )
+        .split(outer_layout[1]);
+        frame.render_widget(Paragraph::new("Main Menu")
+            .block(Block::new().borders(Borders::ALL).green().title("MAIN MENU")), 
+            outer_layout[0]);
+        frame.render_widget(Paragraph::new("Sub Menu")
+            .block(Block::new().borders(Borders::ALL).green().title("SUB MENU")), 
+            inner_layout[0]);
+        frame.render_widget(Paragraph::new("Working Area")
+            .block(Block::new().borders(Borders::ALL).green().title("WORKING AREA")), 
+            inner_layout[1]);
     }
 
     fn handle_events(&mut self) -> io::Result<()> {
@@ -76,70 +102,3 @@ impl App {
         self.counter -= 1;
     }
 }
-impl Widget for &App {
-    fn render(self, area: Rect, buf: &mut Buffer) {
-        let title = Line::from("Fallout TTRPG Helper");
-        let instructions = Line::from(vec![
-            "Decrement".into(),
-            "<left>".blue().bold(),
-            "Increment".into(),
-            "<right>".green().bold(),
-            "quit".into(),
-            "<Esc>".red().bold(),
-        ]);
-        let block = Block::bordered()
-            .title(title.left_aligned())
-            .title_bottom(instructions.left_aligned())
-            .border_set(border::THICK);
-        let counter_text = Text::from(vec![Line::from(vec![
-            "value".into(),
-            self.counter.to_string().yellow(),
-        ])]);
-        Paragraph::new(counter_text)
-            .centered()
-            .block(block)
-            .render(area, buf);
-    }
-}
-
-//impl App {
-//    fn run(&mut self, terminal: &mut DefaultTerminal) -> io::Result<()> {
-//        while !self.exit {
-//            terminal.draw(render_callback: | frame: &mut Frame<'_>| self.draw(frame))?;
-//        }
-//        return Ok(());
-//    }
-//
-//    fn draw(&self, frame: &mut Frame){
-//        frame.render_widget(widget: self, frame.area());
-//    }
-//}
-//impl Widget for &App {
-//    fn render(self, area: ratatui::prelude::Rect, buf: &mut ratatui::prelude::Buffer)
-//        where
-//            Self: Sized {
-//        //render title in the top of layout
-//        Line::from("FALLOUT TTRPG HELPER").bold().render(area, buf);
-//    }
-//}
-//fn weapon_loot_generator() {
-//    let mut gun_list = small_guns_list::create_small_gun_list();
-//    gun_list.append(&mut energy_weapons_list::create_energy_weapon_list());
-//    gun_list.append(&mut heavy_weapons_list::create_heavy_weapon_list());
-//    gun_list.append(&mut melee_weapons_list::create_melee_weapon_list());
-//    let random_weapon = random_range(0..gun_list.len());
-//    print!("{}", gun_list[random_weapon]);
-//}
-//fn shop_weapon_inventory_generator() {
-//    println!("under development");
-//}
-//fn player_weapon_planner() {
-//    println!("under development")
-//}
-//fn location_and_map_generator() {
-//    println!("under development.");
-//}
-//fn exit_function() {
-//    println!("data saving goes here, and then exit");
-//    std::process::exit(0);
-//}
