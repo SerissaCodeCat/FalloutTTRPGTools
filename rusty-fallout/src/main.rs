@@ -4,7 +4,11 @@ use crossterm::{
     terminal,
 };
 use ratatui::{
-    DefaultTerminal, Frame, buffer::Buffer, layout::{Layout, Rect}, prelude::*, style::Stylize, symbols::border, text::{Line, Text}, widgets::{Block, Borders, Paragraph, Widget}
+    DefaultTerminal, Frame, buffer::Buffer, 
+    layout::{Layout, Rect}, 
+    prelude::*, style::Stylize, symbols::border, 
+    text::{Line, Text}, 
+    widgets::{Block, Borders, Paragraph, Widget, List, ListItem, ListState, Tabs}
 };
 use std::{io, vec};
 
@@ -15,6 +19,7 @@ pub mod small_guns_list;
 pub mod utility;
 pub mod weapon;
 
+
 fn main() -> io::Result<()> {
     
     let mut terminal = ratatui::init(); //allowing the app complete
@@ -24,11 +29,25 @@ fn main() -> io::Result<()> {
 }
 
 
-#[derive(Debug, Default)]
+struct MainMenuItems {
+    item: Vec<MainMenuList>
+
+}
+struct MainMenuList {
+    item: String,
+}
+
+#[derive(Debug)]
 pub struct App {
     exit: bool,
-    counter: u8,
 }
+
+impl Default for App {
+    fn default() -> Self {
+        App { exit: false }
+    }
+}
+
 impl App {
     
     pub fn run(&mut self, terminal: &mut DefaultTerminal) -> io::Result<()> {
@@ -50,7 +69,7 @@ impl App {
             .as_ref())
         .split(frame.area());
 
-    let inner_layout = Layout::default()
+        let inner_layout = Layout::default()
         .direction(ratatui::layout::Direction::Vertical)
         .margin(0)
         .constraints([
@@ -60,9 +79,22 @@ impl App {
             .as_ref(),
         )
         .split(outer_layout[1]);
-        frame.render_widget(Paragraph::new("Main Menu")
-            .block(Block::new().borders(Borders::ALL).green().title("MAIN MENU")), 
-            outer_layout[0]);
+        let mut main_menu_state = ListState::default();
+        main_menu_state.select(Some(0));
+        let main_menu_items = vec![
+            "LOOT GENERATION",
+            "NPC GENERATION",
+            "MERCHANT GENERATION",
+            "LOCATION GENERATION",
+            "ENCOUNTER GENERATION",
+        ];
+        let main_menu_list = List::new(main_menu_items)
+            .block(Block::new().borders(Borders::ALL).green().title("MAIN MENU"))
+            .style(Style::new().green())
+            .highlight_style(Style::new().italic())
+            .highlight_symbol(">>")
+            .repeat_highlight_symbol(true);
+        frame.render_stateful_widget(main_menu_list, outer_layout[0], &mut main_menu_state);
         frame.render_widget(Paragraph::new("Sub Menu")
             .block(Block::new().borders(Borders::ALL).green().title("SUB MENU")), 
             inner_layout[0]);
@@ -85,8 +117,6 @@ impl App {
     fn handle_key_event(&mut self, key_event: KeyEvent) {
         match key_event.code {
             KeyCode::Esc => self.exit(),
-            KeyCode::Left => self.decrement_counter(),
-            KeyCode::Right => self.increment_counter(),
             _ => {}
         }
     }
@@ -95,10 +125,8 @@ impl App {
     }
 
     fn increment_counter(&mut self) {
-        self.counter += 1;
     }
 
     fn decrement_counter(&mut self) {
-        self.counter -= 1;
     }
 }
