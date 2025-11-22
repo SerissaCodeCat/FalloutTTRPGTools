@@ -21,44 +21,50 @@ pub mod weapon;
 
 
 fn main() -> io::Result<()> {
-    
     let mut terminal = ratatui::init(); //allowing the app complete
     let app_result = App::default().run(&mut terminal);
     ratatui::restore(); //return control of the Terminal to standard.
     return app_result;
 }
 
-
-struct MainMenuItems {
-    item: Vec<MainMenuList>
-
-}
-struct MainMenuList {
-    item: String,
-}
-
 #[derive(Debug)]
-pub struct App {
+pub struct App <'a>{
     exit: bool,
+    main_menu_list: List<'a>,
 }
 
-impl Default for App {
+
+impl Default for App<'_> {
     fn default() -> Self {
-        App { exit: false }
+        App { 
+            exit: false, 
+            main_menu_list: List::new(vec![
+                "LOOT GENERATION",
+                "NPC GENERATION",
+                "MERCHANT GENERATION",
+                "LOCATION GENERATION",
+                "ENCOUNTER GENERATION",]).block(Block::new().borders(Borders::ALL).green().title("MAIN MENU"))
+            .style(Style::new().green())
+            .highlight_style(Style::new().italic())
+            .highlight_symbol(">>")
+            .repeat_highlight_symbol(true),
+        }
     }
 }
 
-impl App {
+impl App<'_>{
     
     pub fn run(&mut self, terminal: &mut DefaultTerminal) -> io::Result<()> {
+        let mut master_main_menu_state = ListState::default();
+        master_main_menu_state.select(Some(0));
         while !self.exit {
-            terminal.draw(|frame| self.draw(frame))?;
-            self.handle_events()?;
+            terminal.draw(|frame| self.draw(frame, &mut master_main_menu_state))?;
+            self.handle_events(&mut master_main_menu_state)?;
         }
         return Ok(());
     }
 
-    fn draw(&self, frame: &mut Frame) {
+    fn draw(&self, frame: &mut Frame, main_menu_state: &mut ListState) {
         let outer_layout = Layout::default()
         .direction(ratatui::layout::Direction::Horizontal)
         .margin(2)
@@ -79,22 +85,10 @@ impl App {
             .as_ref(),
         )
         .split(outer_layout[1]);
-        let mut main_menu_state = ListState::default();
-        main_menu_state.select(Some(0));
-        let main_menu_items = vec![
-            "LOOT GENERATION",
-            "NPC GENERATION",
-            "MERCHANT GENERATION",
-            "LOCATION GENERATION",
-            "ENCOUNTER GENERATION",
-        ];
-        let main_menu_list = List::new(main_menu_items)
-            .block(Block::new().borders(Borders::ALL).green().title("MAIN MENU"))
-            .style(Style::new().green())
-            .highlight_style(Style::new().italic())
-            .highlight_symbol(">>")
-            .repeat_highlight_symbol(true);
-        frame.render_stateful_widget(main_menu_list, outer_layout[0], &mut main_menu_state);
+
+        //let mut main_menu_state = ListState::default();
+        //main_menu_state.select(Some(0));
+        frame.render_stateful_widget(&self.main_menu_list, outer_layout[0], main_menu_state);
         frame.render_widget(Paragraph::new("Sub Menu")
             .block(Block::new().borders(Borders::ALL).green().title("SUB MENU")), 
             inner_layout[0]);
@@ -103,20 +97,22 @@ impl App {
             inner_layout[1]);
     }
 
-    fn handle_events(&mut self) -> io::Result<()> {
+    fn handle_events(&mut self, main_menu_state: &mut ListState) -> io::Result<()> {
         match event::read()? {
             //for the purposes here, we will only act on key PRESS, not release, or other.
             Event::Key(key_event) if key_event.kind == KeyEventKind::Press => {
-                self.handle_key_event(key_event);
+                self.handle_key_event(key_event, main_menu_state);
             }
             //if it is a differnt type of event ( _ is an all match) do nothing.
             _ => {}
         };
         return Ok(());
     }
-    fn handle_key_event(&mut self, key_event: KeyEvent) {
+    fn handle_key_event(&mut self, key_event: KeyEvent, main_menu_state: &mut ListState) {
         match key_event.code {
             KeyCode::Esc => self.exit(),
+            KeyCode::Char('j') => main_menu_state.select_next(),
+            KeyCode::Char('k') => main_menu_state.select_previous(),
             _ => {}
         }
     }
@@ -124,9 +120,4 @@ impl App {
         self.exit = true;
     }
 
-    fn increment_counter(&mut self) {
-    }
-
-    fn decrement_counter(&mut self) {
-    }
 }
