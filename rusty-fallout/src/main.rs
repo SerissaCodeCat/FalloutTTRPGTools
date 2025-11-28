@@ -22,7 +22,9 @@ pub mod weapon;
 
 fn main() -> io::Result<()> {
     let mut terminal = ratatui::init(); //allowing the app complete
-    let app_result = App::default().run(&mut terminal);
+    let mut master_main_menu_state = ListState::default();
+    master_main_menu_state.select(Some(0));
+    let app_result = App::default().run(&mut terminal, &mut master_main_menu_state);
     ratatui::restore(); //return control of the Terminal to standard.
     return app_result;
 }
@@ -43,10 +45,10 @@ impl Default for App<'_> {
                 "NPC GENERATION",
                 "MERCHANT GENERATION",
                 "LOCATION GENERATION",
-                "ENCOUNTER GENERATION",]).block(Block::new().borders(Borders::ALL).green().title("MAIN MENU"))
+                "ENCOUNTER GENERATION",
+                "EXIT SESSION",]).block(Block::new().borders(Borders::ALL).green().title("MAIN MENU"))
             .style(Style::new().green())
-            .highlight_style(Style::new().italic())
-            .highlight_symbol(">>")
+            .highlight_style(Style::new().bg(Color::Green).black().bold())
             .repeat_highlight_symbol(true),
         }
     }
@@ -54,12 +56,10 @@ impl Default for App<'_> {
 
 impl App<'_>{
     
-    pub fn run(&mut self, terminal: &mut DefaultTerminal) -> io::Result<()> {
-        let mut master_main_menu_state = ListState::default();
-        master_main_menu_state.select(Some(0));
+    pub fn run(&mut self, terminal: &mut DefaultTerminal, main_menu_state: &mut ListState ) -> io::Result<()> {
         while !self.exit {
-            terminal.draw(|frame| self.draw(frame, &mut master_main_menu_state))?;
-            self.handle_events(&mut master_main_menu_state)?;
+            terminal.draw(|frame| self.draw(frame, main_menu_state))?;
+            self.handle_events(main_menu_state)?;
         }
         return Ok(());
     }
@@ -113,6 +113,33 @@ impl App<'_>{
             KeyCode::Esc => self.exit(),
             KeyCode::Char('j') => main_menu_state.select_next(),
             KeyCode::Char('k') => main_menu_state.select_previous(),
+            KeyCode::Enter => {
+                //handle selection
+                if let Some(selected) = main_menu_state.selected() {
+                    match selected {
+                        0 => {
+                            //LOOT GENERATION selected
+                        }
+                        1 => {
+                            //NPC GENERATION selected
+                        }
+                        2 => {
+                            //MERCHANT GENERATION selected
+                        }
+                        3 => {
+                            //LOCATION GENERATION selected
+                        }
+                        4 => {
+                            //ENCOUNTER GENERATION selected
+                        }
+                        5 => {
+                            //EXIT SESSION selected
+                            self.exit();
+                        }
+                        _ => {}
+                    }
+                }
+            }
             _ => {}
         }
     }
